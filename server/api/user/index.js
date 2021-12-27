@@ -4,7 +4,7 @@ const User = require('/Users/josephtang/seniorCapstone/MVP/server/models/User.js
 app.get('*', (req, res) => {
     connectDB()
         .then(() => {
-            res.send('2')
+            newUser = new User(req.body);
 
         })
         .catch(error => {
