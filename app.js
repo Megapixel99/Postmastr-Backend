@@ -1,8 +1,8 @@
 var http = require('http'); // Import Node.js core module
 const express = require('express');
 const app = express();
-const connectDB = require('/Users/josephtang/seniorCapstone/MVP/server/util/db.js');
-const User = require('/Users/josephtang/seniorCapstone/MVP/server/models/User.js');
+const connectDB = require('/Users/josephtang/seniorCapstone/MVP/util/db.js');
+const User = require('/Users/josephtang/seniorCapstone/MVP/models/User.js');
 var server = http.createServer(function (req, res) {   //create web server
     if (req.url == '/') { //check the URL of the current request
 

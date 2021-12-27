@@ -1,6 +1,6 @@
 const app = require('../../util/configureApi');
-const connectDB = require('/Users/josephtang/seniorCapstone/MVP/server/util/db.js');
-const User = require('/Users/josephtang/seniorCapstone/MVP/server/models/User.js');
+const connectDB = require('/Users/josephtang/seniorCapstone/MVP/util/db.js');
+const User = require('/Users/josephtang/seniorCapstone/MVP/models/User.js');
 app.get('*', (req, res) => {
     connectDB()
         .then(() => {
