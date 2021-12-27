@@ -17,8 +17,13 @@ var server = http.createServer(function (req, res) {   //create web server
     else if (req.url.includes("student")) {
 
         console.log('works');
+        userDetails = new User({
+            username: "Jim",
+            password: "password",
+
+        });
         connectDB().then(() => {
-            return "frick";
+            return userDetails.username;
 
         });
         console.log("db connected")
