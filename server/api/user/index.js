@@ -4,7 +4,10 @@ const User = require('/Users/josephtang/seniorCapstone/MVP/server/models/User.js
 app.get('*', (req, res) => {
     connectDB()
         .then(() => {
-            res.send(2);
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write('<html><body><p>This is admin Page.</p></body></html>');
+            res.end();
+
         })
         .catch(error => {
             res.status(error.statusCode || 500).json({
