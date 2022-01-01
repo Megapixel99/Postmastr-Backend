@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const handlebars = require('handlebars');
+const fs = require('fs');
 const path = require('path');
 
-handlebars.registerPartial('main', handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../assets/hbs/main.hbs`)).toString()));
-
-function prepareSource(filePath, data) {
-  const template = handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../WebClient/hbs/layouts/base.hbs`)).toString());
+function prepareSource(filePath, data, templateName = 'main') {
+  let partialSource = fs.readFileSync(path.resolve(filePath)).toString();
+  handlebars.registerPartial(templateName, handlebars.compile(partialSource));
+  let template = handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../assets/hbs/main.hbs`)).toString());
   return template(data);
 }
 
