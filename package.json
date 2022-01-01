@@ -12,6 +12,8 @@
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "express-device": "^0.4.2",
+    "fs": "^0.0.1-security",
+    "handlebars": "^4.7.7",
     "helmet": "^4.6.0"
   },
   "license": "MIT",
