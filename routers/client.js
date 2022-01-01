@@ -41,8 +41,4 @@ router.get('/tables', (req, res) => {
   res.send(prepareSource(`${__dirname}/../assets/hbs/tables.hbs`, {}));
 });
 
-router.get('/upgrade', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/upgrade.html'));
-});
-
 module.exports = router;
