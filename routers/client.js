@@ -10,11 +10,11 @@ function prepareSource(filePath, data) {
 }
 
 router.get('/', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/dashboard.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {}));
 });
 
 router.get('/icons', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/icons.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/icons.hbs`, {}));
 });
 
 router.get('/login', (req, res) => {
@@ -22,15 +22,15 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/map', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/map.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/map.hbs`, {}));
 });
 
 router.get('/maps', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/maps.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/maps.hbs`, {}));
 });
 
 router.get('/profile', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/profile.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/profile.hbs`, {}));
 });
 
 router.get('/register', (req, res) => {
@@ -38,7 +38,7 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/tables', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/tables.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/tables.hbs`, {}));
 });
 
 router.get('/upgrade', (req, res) => {
