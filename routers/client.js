@@ -1,5 +1,13 @@
 const router = require('express').Router();
+const handlebars = require('handlebars');
 const path = require('path');
+
+handlebars.registerPartial('main', handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../assets/hbs/main.hbs`)).toString()));
+
+function prepareSource(filePath, data) {
+  const template = handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../WebClient/hbs/layouts/base.hbs`)).toString());
+  return template(data);
+}
 
 router.get('/', (req, res) => {
   res.sendFile(path.resolve('./assets/html/dashboard.html'));
