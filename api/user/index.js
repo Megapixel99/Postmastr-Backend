@@ -5,7 +5,7 @@ app.post('*', (req, res) => {
     connectDB()
         .then(() => {
             const { name, pass } = req.body
-            return User.create({ name, pass });
+            User.create({ name, pass });
 
 
 
