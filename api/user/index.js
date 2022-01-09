@@ -4,8 +4,21 @@ const User = require('../../models/User.js');
 app.post('*', (req, res) => {
     connectDB()
         .then(() => {
-            const { name, pass } = req.body
-            User.create({ name, pass });
+            //var reqUser = JSON.stringify(req.body.username);
+            // var reqPass = JSON.stringify(req.body.password);
+            // res.send(reqUser);
+            // res.send(reqPass);
+            console.log(req.body);
+            const name = req.body.username;
+            const pass = req.body.password;
+            console.log(name);
+            console.log(pass);
+
+
+
+
+
+            return User.create({ username: name, password: pass });
 
 
 
