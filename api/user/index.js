@@ -22,8 +22,7 @@ app.post('*', (req, res) => {
 
 
 
-            res.status(200).send('endpoint reached for inserting user');
-            res.end();
+
 
         })
         .catch(error => {
