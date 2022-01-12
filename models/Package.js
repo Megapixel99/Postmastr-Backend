@@ -14,4 +14,23 @@ const packageSchema = new mongoose.Schema({
 
 
 });
+packageSchema.pre('save', function (next) {
+    const package = this;
+    if (!user.isModified('trackingNumber')) {
+        next();
+    } else {
+        bcrypt.hash(package.trackingNumber, 10).then(hashedtrackingNumber => {
+            package.trackingNumber = hashedtrackingNumber;
+            next();
+
+        });
+
+
+    }
+});
+UserSchema.method('comparePassword', function (candidatePassword) {
+    const user = this;
+    return bcrypt.compare(candidatePassword, user.password);
+});
+module.exports = mongoose.model("User", userSchema);
 module.exports = mongoose.model("Package", packageSchema);

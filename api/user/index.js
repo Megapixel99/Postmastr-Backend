@@ -1,6 +1,7 @@
 const app = require('../../util/configureApi.js');
 const connectDB = require('../../util/db.js');
 const User = require('../../models/User.js');
+
 app.post('*', (req, res) => {
     connectDB()
         .then(() => {
