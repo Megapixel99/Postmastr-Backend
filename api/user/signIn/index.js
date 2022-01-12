@@ -9,10 +9,13 @@ app.post("*", (req, res) => {
             return User.findOne({ username: req.body.username });
         }).then(user => {
             if (!user) {
+                console.log("No user found");
                 throw new Error('No user found.');
             }
             finalUser = user;
+            console.log("user found");
             return user.comparePassword(req.body.password);
+
         }).then(isPasswordCorrect => {
             if (!isPasswordCorrect) {
                 throw new Error('Invalid password')
