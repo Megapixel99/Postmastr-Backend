@@ -15,7 +15,7 @@ app.post("*", (req, res) => {
             finalUser = user;
             console.log("user found");
             console.log(user.comparePassword(req.body.password));
-            isPasswordCorrect = user.comparePassword(req.body.password);
+            return user.comparePassword(req.body.password);
 
         }).then(isPasswordCorrect => {
             if (!isPasswordCorrect) {

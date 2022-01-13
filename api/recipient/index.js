@@ -21,7 +21,7 @@ app.post('*', (req, res) => {
 
 
 
-            return Recipient.create({ name: name, boxnumber: boxNumber, email: email, idNumber: idNumber, });
+            return Recipient.create({ name: name, boxNumber: boxNumber, email: email, idNumber: idNumber, });
 
 
 
