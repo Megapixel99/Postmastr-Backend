@@ -14,6 +14,7 @@ app.post('*', (req, res) => {
             const boxNumber = req.body.boxNumber;
             const email = req.body.email;
             const idNumber = req.body.idNumber
+            res.send("successfully logged Recipient");
 
 
 

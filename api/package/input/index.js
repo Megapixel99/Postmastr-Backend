@@ -12,8 +12,11 @@ app.post('*', (req, res) => {
             const fromAddress = req.body.returnAddress;
             const toAddress = req.body.recipientAddress;
             const trackingNo = req.body.trackingNumber;
+            res.send("successfully logged Package");
+
 
             return Package.create({ recipient: recipient, sender: sender, carrierName: carrier, returnAddress: fromAddress, recipientAddress: toAddress, trackingNumber: trackingNo });
+
 
 
 
