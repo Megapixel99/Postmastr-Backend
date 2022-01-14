@@ -16,7 +16,7 @@ app.post('*', (req, res) => {
 
 
             Package.create({ recipient: recipient, sender: sender, carrierName: carrier, returnAddress: fromAddress, recipientAddress: toAddress, trackingNumber: trackingNo });
-            res.status("pack loggged");
+            res.status(200).send("pack loggged");
 
 
 
