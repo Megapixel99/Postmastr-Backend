@@ -4,23 +4,49 @@ const Package = require('../../../models/Package.js');
 app.post('*', (req, res) => {
     connectDB()
         .then(() => {
+            return Package.findOne({ trackingNumber: req.body.trackingNumber });
+        }).then(package => {
+            if (package) {
+                console.log("duplicate");
+                throw new Error("Package already in system")
+            } else {
+                const recipient = req.body.recipient;
+                const sender = req.body.sender;
+                const carrier = req.body.carrierName;
+                const fromAddress = req.body.returnAddress;
+                const toAddress = req.body.recipientAddress;
+                const trackingNo = req.body.trackingNumber;
+                const newPackage = new Package({
+                    recipient: recipient,
+                    sender: sender,
+                    carrierName: carrier,
+                    returnAddress: fromAddress,
+                    recipientAddress: toAddress,
+                    trackingNumber: trackingNo,
 
-            console.log(req.body);
-            const recipient = req.body.recipient;
-            const sender = req.body.sender;
-            const carrier = req.body.carrierName;
-            const fromAddress = req.body.returnAddress;
-            const toAddress = req.body.recipientAddress;
-            const trackingNo = req.body.trackingNumber;
-
-
-
-            Package.create({ recipient: recipient, sender: sender, carrierName: carrier, returnAddress: fromAddress, recipientAddress: toAddress, trackingNumber: trackingNo });
-            res.status(200).send("pack loggged");
 
 
 
 
+
+                })
+                newPackage.save().then(() => {
+                    res.status(200).json({
+                        result: {
+                            recipient: newPackage.recipient,
+                            sender: newPackage.sender,
+                            carrierName: newPackage.carrierName,
+                            returnAddress: newPackage.returnAddress,
+                            recipientAddress: newPackage.recipientAddress,
+                            trackingNumber: newPackage.trackingNumber,
+
+                        }
+                    })
+
+                })
+
+
+            }
 
 
         })

@@ -10,17 +10,38 @@ app.post("*", (req, res) => {
         }).then(user => {
             if (!user) {
                 console.log("No user found");
-                throw new Error('No user found.');
+                res.status(404).json({
+                    result: {
+                        username: null,
+                    },
+                    message: "No user found",
+                });
             }
             finalUser = user;
             console.log("user found");
-            console.log(user.comparePassword(req.body.password));
-            return user.comparePassword(req.body.password);
+            bool = user.comparePassword(req.body.password);
+            if (!bool) {
+                console.log("Invalid password");
+                res.status(401).json({
+                    result: {
+                        username: null,
+                    },
+                    message: "Invalid password",
+                });
+
+            } else {
+                res.status(200).json({
+                    result: {
+                        username: finalUser.username,
+                    },
+                    message: "User found",
+                });
 
         }).then(isPasswordCorrect => {
             if (!isPasswordCorrect) {
                 throw new Error('Invalid password')
             }
+            next();
         }).then(finalUser => {
             res.status(200).json({
                 result: {

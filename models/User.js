@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, default: "Jim" },
     password: { type: String, required: true, default: "pass" }
 });
-userSchema.pre('save', function (next) {
+/*userSchema.pre('save', function (next) {
     const user = this;
     if (!user.isModified('password')) {
         next();
@@ -17,12 +17,13 @@ userSchema.pre('save', function (next) {
 
 
     }
-});
+});*/
 userSchema.method('comparePassword', function (candidatePassword) {
     const user = this;
     console.log(user)
     console.log(user.password);
     console.log(candidatePassword);
     return bcrypt.compareSync(candidatePassword, user.password);
+
 });
 module.exports = mongoose.model("User", userSchema);
