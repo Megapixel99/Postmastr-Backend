@@ -1,12 +1,21 @@
 const router = require('express').Router();
+const handlebars = require('handlebars');
+const fs = require('fs');
 const path = require('path');
 
+function prepareSource(filePath, data, templateName = 'main') {
+  let partialSource = fs.readFileSync(path.resolve(filePath)).toString();
+  handlebars.registerPartial(templateName, handlebars.compile(partialSource));
+  let template = handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../assets/hbs/main.hbs`)).toString());
+  return template(data);
+}
+
 router.get('/', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/dashboard.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {}));
 });
 
 router.get('/icons', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/icons.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/icons.hbs`, {}));
 });
 
 router.get('/login', (req, res) => {
@@ -14,15 +23,15 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/map', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/map.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/map.hbs`, {}));
 });
 
 router.get('/maps', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/maps.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/maps.hbs`, {}));
 });
 
 router.get('/profile', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/profile.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/profile.hbs`, {}));
 });
 
 router.get('/register', (req, res) => {
@@ -30,11 +39,7 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/tables', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/tables.html'));
-});
-
-router.get('/upgrade', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/upgrade.html'));
+  res.send(prepareSource(`${__dirname}/../assets/hbs/tables.hbs`, {}));
 });
 
 module.exports = router;
