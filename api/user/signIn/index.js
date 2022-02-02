@@ -4,14 +4,13 @@ const connectDB = require("../../../util/db.js");
 const User = require("../../../models/User.js");
 app.post("*", (req, res) => {
     let finalUser;
-    console.log(req.body)
     connectDB()
         .then(() => {
             return User.findOne({ username: req.body.username });
         }).then(user => {
             if (!user) {
                 console.log("No user found");
-                res.status(404).json({
+                return res.status(404).json({
                     result: {
                         username: null,
                     },
@@ -23,7 +22,7 @@ app.post("*", (req, res) => {
             bool = user.comparePassword(req.body.password);
             if (!bool) {
                 console.log("Invalid password");
-                res.status(401).json({
+                return res.status(401).json({
                     result: {
                         username: null,
                     },
@@ -31,7 +30,7 @@ app.post("*", (req, res) => {
                 });
 
             } else {
-                res.status(200).json({
+                return res.status(200).json({
                     result: {
                         username: finalUser.username,
                     },
