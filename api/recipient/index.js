@@ -10,7 +10,11 @@ app.post('*', (req, res) => {
         }).then(recipient => {
             if (recipient) {
                 console.log("duplicate");
-                throw new Error("Recipient is already within our system");
+                return res.status(403).json({
+
+                    message: "Recipient is already within our system",
+                });
+
 
             } else {
                 const name = req.body.name;
@@ -27,7 +31,7 @@ app.post('*', (req, res) => {
 
                 });
                 newRecipient.save().then(() => {
-                    res.status(200).json({
+                    return res.status(201).json({
                         result: {
                             name: newRecipient.Errorname,
                             boxNumber: newRecipient.boxNumber,
@@ -46,7 +50,7 @@ app.post('*', (req, res) => {
 
         )
         .catch(error => {
-            res.status(error.statusCode || 500).json({
+            return res.status(error.statusCode || 500).json({
                 error: error.message,
             });
         });

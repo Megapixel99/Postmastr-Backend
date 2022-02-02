@@ -8,7 +8,11 @@ app.post('*', (req, res) => {
         }).then(package => {
             if (package) {
                 console.log("duplicate");
-                throw new Error("Package already in system")
+                return res.status(403).json({
+
+                    message: "package already in system",
+                });
+
             } else {
                 const recipient = req.body.recipient;
                 const sender = req.body.sender;
@@ -31,7 +35,7 @@ app.post('*', (req, res) => {
 
                 })
                 newPackage.save().then(() => {
-                    res.status(200).json({
+                    return res.status(201).json({
                         result: {
                             recipient: newPackage.recipient,
                             sender: newPackage.sender,
@@ -51,7 +55,7 @@ app.post('*', (req, res) => {
 
         })
         .catch(error => {
-            res.status(error.statusCode || 500).json({
+            return res.status(error.statusCode || 500).json({
                 error: error.message,
             });
         });
