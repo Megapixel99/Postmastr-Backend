@@ -4,6 +4,7 @@ const connectDB = require("../../../util/db.js");
 const User = require("../../../models/User.js");
 app.post("*", (req, res) => {
     let finalUser;
+    console.log(req.body)
     connectDB()
         .then(() => {
             return User.findOne({ username: req.body.username });
