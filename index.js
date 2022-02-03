@@ -8,7 +8,7 @@ const http = require('http');
 const app = express();
 
 app.set('json spaces', 2);
-// app.use(require('helmet')());
+app.use(require('helmet')());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy',"default-src 'self' 'unsafe-inline' 'https://fonts.googleapis.com' 'https://post-mastr-mvp.vercel.app'");
+  res.setHeader('Content-Security-Policy',"default-src 'self' 'unsafe-inline' post-mastr-mvp.vercel.app fonts.googleapis.com fonts.gstatic.com");
   next();
 });
 
