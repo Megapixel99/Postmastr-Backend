@@ -74,7 +74,7 @@
         </ul>
         <hr class="d-lg-none" />
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
               <i class="fab fa-facebook-square"></i>
               <span class="nav-link-inner--text d-lg-none">Facebook</span>
@@ -105,7 +105,7 @@
               </span>
               <span class="nav-link-inner--text">Upgrade to PRO</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -152,7 +152,7 @@
               <div class="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
               </div>
-              <form role="form">
+              <form id='formId' action=''>
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
                     <div class="input-group-prepend">
@@ -176,7 +176,7 @@
                   </label>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary my-4">Sign in</button>
+                  <button type="submit" id='submitButton' class="btn btn-primary mt-4">Create account</button>
                 </div>
               </form>
             </div>
@@ -229,9 +229,9 @@
   <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
-  <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <!-- <script src="../assets/js/argon.js?v=1.2.0"></script>
   <script src="../assets/js/jquery.min.js"></script>
-  <!-- <script type="text/javascript">
+  <script type="text/javascript">
     $.ajax({
       url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
       type: 'POST',
@@ -248,6 +248,32 @@
       }
     });
   </script> -->
+  <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script type="text/javascript">
+    console.log("start");
+    $(() => {
+      $("#submitButton").click(function(ev) {
+        var form = $("#formId");
+        var url = form.attr('action');
+        $.ajax({
+            url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
+            type: 'POST',
+            data: {
+              username: "testUser@example.com",
+              password: "testPassword1",
+            },
+            dataType: "json",
+            success: function (res) {
+            console.log("Im done");
+            },
+            error: function(err) {
+            console.log("oof");
+            }
+        });
+      })
+    });
+  </script>
 </body>
 
 </html>
