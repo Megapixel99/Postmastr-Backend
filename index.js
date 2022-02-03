@@ -15,6 +15,11 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy',"default-src 'self' 'unsafe-inline'");
+  next();
+});
+
 app.use(device.capture({ parseUserAgent: true }));
 
 app.use(require('./routers/client.js'));
