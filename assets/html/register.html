@@ -42,11 +42,11 @@
       <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
         <div class="navbar-collapse-header">
           <div class="row">
-            <div class="col-6 collapse-brand">
+            <!-- <div class="col-6 collapse-brand">
               <a href="/">
                 <img src="../assets/img/brand/blue.png">
               </a>
-            </div>
+            </div> -->
             <div class="col-6 collapse-close">
               <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span></span>
@@ -135,9 +135,12 @@
       <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
           <div class="card bg-secondary border-0">
-            <div class="card-header bg-transparent pb-5">
-            </div>
+            <!-- <div class="card-header bg-transparent pb-5">
+            </div> -->
             <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <small>Register with an email and a password</small>
+              </div>
               <form role="form">
                 <div class="form-group">
                   <div class="input-group input-group-merge input-group-alternative mb-3">
@@ -152,7 +155,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password">
+                    <input class="form-control" placeholder="Password" type="password" id="password">
                   </div>
                 <!-- <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div> -->
                 <div class="row my-4">
@@ -172,32 +175,6 @@
       </div>
     </div>
   </div>
-  <script src="../assets/js/argon.js?v=1.2.0"></script>
-  <script src="../assets/js/jquery.min.js"></script>
-  <script type="text/javascript">
-    console.log("start");
-    $(() => {
-      $("#submitButton").click(function(ev) {
-        var form = $("#formId");
-        var url = form.attr('action');
-        $.ajax({
-            url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
-            type: 'POST',
-            data: {
-              username: "testUser@example.com",
-              password: "testPassword1",
-            },
-            dataType: "json",
-            success: function (res) {
-            console.log("Im done");
-            },
-            error: function(err) {
-            console.log("oof");
-            }
-        });
-      })
-    });
-  </script>
   <!-- <script src="../assets/js/argon.js?v=1.2.0"></script>
   <script src="../assets/js/jquery.min.js"></script>
   <script type="text/javascript">

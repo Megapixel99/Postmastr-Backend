@@ -33,9 +33,9 @@
   <!-- Navbar -->
   <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
     <div class="container">
-      <a class="navbar-brand" href="/">
+      <!-- <a class="navbar-brand" href="/">
         <img src="../assets/img/brand/white.png">
-      </a>
+      </a> -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -56,11 +56,11 @@
           </div>
         </div>
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="/" class="nav-link">
               <span class="nav-link-inner--text">Dashboard</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="login" class="nav-link">
               <span class="nav-link-inner--text">Login</span>
@@ -118,8 +118,7 @@
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-              <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+              <h1 class="text-white">Log In</h1>
             </div>
           </div>
         </div>
@@ -135,7 +134,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-7">
           <div class="card bg-secondary border-0 mb-0">
-            <div class="card-header bg-transparent pb-5">
+            <!-- <div class="card-header bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">
                 <a href="#" class="btn btn-neutral btn-icon">
@@ -147,10 +146,10 @@
                   <span class="btn-inner--text">Google</span>
                 </a>
               </div>
-            </div>
+            </div> -->
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <small>Or sign in with credentials</small>
+                <small>Sign in with credentials</small>
               </div>
               <form id='formId' action=''>
                 <div class="form-group mb-3">
@@ -158,7 +157,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Email" type="email">
+                    <input class="form-control" placeholder="Email" type="email" id="email">
                   </div>
                 </div>
                 <div class="form-group">
@@ -166,17 +165,17 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password">
+                    <input class="form-control" placeholder="Password" type="password" id="password">
                   </div>
                 </div>
-                <div class="custom-control custom-control-alternative custom-checkbox">
+                <!-- <div class="custom-control custom-control-alternative custom-checkbox">
                   <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
                     <span class="text-muted">Remember me</span>
                   </label>
-                </div>
+                </div> -->
                 <div class="text-center">
-                  <button type="submit" id='submitButton' class="btn btn-primary mt-4">Create account</button>
+                  <button type="submit" id='submitButton' class="btn btn-primary mt-4" onclick="signIn()">Sign In</button>
                 </div>
               </form>
             </div>
@@ -194,7 +193,7 @@
     </div>
   </div>
   <!-- Footer -->
-  <footer class="py-5" id="footer-main">
+  <!-- <footer class="py-5" id="footer-main">
     <div class="container">
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
@@ -220,7 +219,7 @@
         </div>
       </div>
     </div>
-  </footer>
+  </footer> -->
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -251,28 +250,23 @@
   <script src="../assets/js/argon.js?v=1.2.0"></script>
   <script src="../assets/js/jquery.min.js"></script>
   <script type="text/javascript">
-    console.log("start");
-    $(() => {
-      $("#submitButton").click(function(ev) {
-        var form = $("#formId");
-        var url = form.attr('action');
-        $.ajax({
-            url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
-            type: 'POST',
-            data: {
-              username: "testUser@example.com",
-              password: "testPassword1",
-            },
-            dataType: "json",
-            success: function (res) {
-            console.log("Im done");
-            },
-            error: function(err) {
-            console.log("oof");
-            }
-        });
-      })
-    });
+    function signIn() {
+      $.ajax({
+        url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
+        type: 'POST',
+        data: {
+          username: document.getElementById('email').value,
+          password: document.getElementById('password').value,
+        },
+        dataType: "json",
+        success: function (res) {
+          window.location = '/';
+        },
+        error: function(err) {
+          console.error(err);
+        }
+      });
+    }
   </script>
 </body>
 
