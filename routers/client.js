@@ -49,14 +49,14 @@ router.get('/maps', (req, res) => {
   }));
 });
 
-router.get('/recipientInfo', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/recipientInfo.hbs`, {
+router.get('/find/recipient', (req, res) => {
+  res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
     username: req.session.username,
   }));
 });
 
-router.get('/packageInfo', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/packageInfo.hbs`, {
+router.get('/find/package', (req, res) => {
+  res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
     username: req.session.username,
   }));
 });
