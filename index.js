@@ -8,7 +8,7 @@ const http = require('http');
 const app = express();
 
 app.set('json spaces', 2);
-app.use(require('helmet')());
+// app.use(require('helmet')());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
