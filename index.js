@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy',"default-src 'self' 'unsafe-inline'");
+  res.setHeader('Content-Security-Policy',"default-src 'self' 'unsafe-inline' post-mastr-mvp.vercel.app fonts.googleapis.com fonts.gstatic.com");
   next();
 });
 

@@ -42,11 +42,11 @@
       <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
         <div class="navbar-collapse-header">
           <div class="row">
-            <div class="col-6 collapse-brand">
+            <!-- <div class="col-6 collapse-brand">
               <a href="/">
                 <img src="../assets/img/brand/blue.png">
               </a>
-            </div>
+            </div> -->
             <div class="col-6 collapse-close">
               <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span></span>
@@ -74,7 +74,7 @@
         </ul>
         <hr class="d-lg-none" />
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank" data-toggle="tooltip" data-original-title="Like us on Facebook">
               <i class="fab fa-facebook-square"></i>
               <span class="nav-link-inner--text d-lg-none">Facebook</span>
@@ -135,9 +135,12 @@
       <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
           <div class="card bg-secondary border-0">
-            <div class="card-header bg-transparent pb-5">
-            </div>
+            <!-- <div class="card-header bg-transparent pb-5">
+            </div> -->
             <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <small>Register with an email and a password</small>
+              </div>
               <form role="form">
                 <div class="form-group">
                   <div class="input-group input-group-merge input-group-alternative mb-3">
@@ -154,10 +157,17 @@
                     </div>
                     <input class="form-control" placeholder="Password" type="password" id="password">
                   </div>
-                </div>
+                <!-- <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div> -->
+                <div class="row my-4">
+                  <div class="col-12">
+                    </div>
+                  </div>
                 <div class="text-center">
                   <button type="button" class="btn btn-primary mt-4" onclick="createAccount()">Create account</button>
                 </div>
+                <!-- <div class="text-center">
+                  <button type="button" class="btn btn-primary my-4">Create account</button>
+                </div> -->
               </form>
             </div>
           </div>
@@ -165,19 +175,39 @@
       </div>
     </div>
   </div>
+  <!-- <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script type="text/javascript">
+    $.ajax({
+      url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
+      type: 'POST',
+      data: {
+        username: "username",
+        password: "password",
+      },
+      dataType: "json",
+      success: function (res) {
+        console.log("Im done");
+      },
+      error: function(err) {
+        console.log("oof");
+      }
+    });
+  </script> -->
+
   <!-- Footer -->
   <!-- <footer class="py-5" id="footer-main">
     <div class="container">
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            &copy; 2022 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Postmastr</a>
           </div>
         </div>
         <div class="col-xl-6">
           <ul class="nav nav-footer justify-content-center justify-content-xl-end">
             <li class="nav-item">
-              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Postmastr</a>
             </li>
             <li class="nav-item">
               <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
