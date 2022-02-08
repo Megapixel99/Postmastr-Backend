@@ -24,11 +24,6 @@ const formSchema = new mongoose.Schema({
     reportReason: { type: String, required: true },
     employeeNote: { type: String, required: false, default: "NA" },
     isResolved: { type: Boolean, default: false }
-
-
-
-
-
 });
 
 const userSchema = new mongoose.Schema({
@@ -55,11 +50,10 @@ userSchema.method('comparePassword', function (candidatePassword) {
     console.log(user.password);
     console.log(candidatePassword);
     return bcrypt.compareSync(candidatePassword, user.password);
-
 });
 
 module.exports = {
-  package: mongoose.model("Package", packageSchema),
-  recipient: mongoose.model("recipient", recipientSchema),
-  user: mongoose.model("User", userSchema),
+  Package: mongoose.model("Package", packageSchema),
+  Recipient: mongoose.model("recipient", recipientSchema),
+  User: mongoose.model("User", userSchema),
 };

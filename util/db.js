@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const env = require('../environment/environment.js');
 
 mongoose.Promise = global.Promise;
 let isConnected;
 
 // Note: This should be stored in environment variables
-const DB_URL = "mongodb+srv://admin:v0vPd1nBjNnu1sg9thMH3gZd2R5agHE4Ti3q8wl2vq8JT0J6@recipients.vtx13.mongodb.net/postmastr"
+const DB_URL = env.databaseConnect;
 
 
 const connectToDatabase = () => {

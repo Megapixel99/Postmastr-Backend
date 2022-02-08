@@ -1,7 +1,7 @@
-const app = require('../../util/configureApi.js');
-const connectDB = require('../../util/db.js');
-const User = require('../../models/User.js');
-import bcrypt from 'bcryptjs';
+const app = require('express').Router();
+const connectDB = require('../../../util/db.js');
+const { User } = require('../../../models/models.js');
+const bcrypt = require('bcryptjs');
 
 
 app.post('*', (req, res) => {

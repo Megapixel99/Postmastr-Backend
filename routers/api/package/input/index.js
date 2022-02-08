@@ -1,6 +1,6 @@
-const app = require('../../../util/configureApi.js');
-const connectDB = require('../../../util/db.js');
-const Package = require('../../../models/Package.js');
+const app = require('express').Router();
+const connectDB = require('../../../../util/db.js');
+const { Package } = require('../../../../models/models.js');
 app.post('*', (req, res) => {
     connectDB()
         .then(() => {

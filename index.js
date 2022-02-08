@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const device = require('express-device');
+// const device = require('express-device');
 const http = require('http');
 
 const app = express();
@@ -20,10 +20,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(device.capture({ parseUserAgent: true }));
+// app.use(device.capture({ parseUserAgent: true }));
 
 app.use(require('./routers/client.js'));
-app.use('/api', require('./routers/api.js'));
+app.use('/user', require('./routers/api/user/index.js'));
+app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
+app.use('/recipient', require('./routers/api/recipient/index.js'));
+app.use('/package/input', require('./routers/api/package/input/index.js'));
+app.use('/package/output', require('./routers/api/package/output/index.js'));
 
 app.use('/assets/css', express.static('./assets/css'));
 app.use('/assets/fonts/nucleo', express.static('./assets/fonts/nucleo'));

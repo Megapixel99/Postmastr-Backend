@@ -1,4 +1,4 @@
-const app = require("../../../util/configureApi.js");
+const app = require('express').Router();
 const connectDB = require("../../../util/db.js");
 const multer = require('multer')
 import Tesseract from 'tesseract.js';
