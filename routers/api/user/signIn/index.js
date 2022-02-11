@@ -36,7 +36,7 @@ app.post("*", (req, res) => {
                     },
                     message: "User found",
                 });
-
+            }
         }).then(isPasswordCorrect => {
             if (!isPasswordCorrect) {
                 throw new Error('Invalid password')

@@ -16,15 +16,15 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy',"default-src 'self' 'unsafe-inline' post-mastr-mvp.vercel.app fonts.googleapis.com fonts.gstatic.com");
+  res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' post-mastr-mvp.vercel.app fonts.googleapis.com fonts.gstatic.com");
   next();
 });
 
 // app.use(device.capture({ parseUserAgent: true }));
 
 app.use(require('./routers/client.js'));
-app.use('/user', require('./routers/api/user/index.js'));
 app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
+app.use('/user', require('./routers/api/user/index.js'));
 app.use('/recipient', require('./routers/api/recipient/index.js'));
 app.use('/package/input', require('./routers/api/package/input/index.js'));
 app.use('/package/output', require('./routers/api/package/output/index.js'));
@@ -55,5 +55,5 @@ app.use((req, res) => {
 //     key: fs.readFileSync(path.resolve(__dirname, env.certPrivateKeyPath)),
 //   }, app).listen(443);
 // } else {
-  http.createServer(app).listen(3000);
+http.createServer(app).listen(3000);
 // }
