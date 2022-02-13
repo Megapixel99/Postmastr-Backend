@@ -30,7 +30,6 @@ app.post("*", (req, res) => {
                 });
 
             } else {
-              req.session.user = finalUser.username;
                 return res.status(200).json({
                     result: {
                         username: finalUser.username,
@@ -44,6 +43,7 @@ app.post("*", (req, res) => {
             }
             next();
         }).then(finalUser => {
+            req.session.username = finalUser.username;
             res.status(200).json({
                 result: {
                     username: finalUser.username,

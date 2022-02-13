@@ -22,7 +22,7 @@ app.post('*', (req, res) => {
                 //User.create({ username: name, password: pass });
                 const newUser = new User({ username: name, password: pass });
                 newUser.save().then(() => {
-                  req.session.user = finalUser.username;
+                  req.session.username = newUser.username;
                     return res.status(201).json({
                         result: {
                             username: newUser.username,
