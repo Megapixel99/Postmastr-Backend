@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const env = require('../environment/environment.js');
+const env = require('./environment.js');
 
 mongoose.Promise = global.Promise;
 let isConnected;

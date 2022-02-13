@@ -3,7 +3,9 @@ require('dotenv').config({
 });
 
 const env = {
-  databaseConnect: process.env.DATABASE_CONNECT
+  databaseConnect: process.env.DATABASE_CONNECT,
+  sessionSecret: process.env.SESSION_SECRET,
+  httpOnly: (process.env.HTTP_ONLY.toLowerCase() === 't' || process.env.HTTP_ONLY.toLowerCase() === 'true'),
 };
 
 for (const key in env) {
