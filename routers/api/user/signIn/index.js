@@ -50,7 +50,7 @@ app.post("*", (req, res) => {
                     password: finalUser.password,
                 }
             });
-        })
+        })*/
         .catch(err => {
             res.status(err.statusCode || 500).json({
                 error: err.message
