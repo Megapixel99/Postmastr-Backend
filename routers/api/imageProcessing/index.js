@@ -1,14 +1,18 @@
 const app = require('express').Router();
-const { multer, tesseract } = require('../../../util');
+
+const multer = require('multer')
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 
-app.post('*', multer.single('scan'), (req, res) => {
-    res.sendstatus(202)
 
-
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, path.join(__dirname, './images'));
+    },
+    filename(req, file, cb) {
+        cb(null, `${uuidv4()}.${file.mimetype.split('/')[1]}`);
+    },
 });
 
-
-
-
-module.exports = app;
+module.exports = { app, multer({ storage }) };
