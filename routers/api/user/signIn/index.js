@@ -37,19 +37,14 @@ app.post("*", (req, res) => {
                     message: "User found",
                 });
             }
-        }).then(isPasswordCorrect => {
-            if (!isPasswordCorrect) {
-                throw new Error('Invalid password')
-            }
-            next();
-        }).then(finalUser => {
+        })/*.then(finalUser => {
             res.status(200).json({
                 result: {
                     username: finalUser.username,
                     password: finalUser.password,
                 }
             });
-        })
+        })*/
         .catch(err => {
             res.status(err.statusCode || 500).json({
                 error: err.message
