@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 // app.use(device.capture({ parseUserAgent: true }));
 
-app.use(require('./routers/client.js'));
+
 
 app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
 
@@ -37,6 +37,7 @@ app.use('/package/output', require('./routers/api/package/output/index.js'));
 
 
 app.use('/assets/css', express.static('./assets/css'));
+app.use(require('./routers/client.js'));
 app.use('/assets/fonts/nucleo', express.static('./assets/fonts/nucleo'));
 app.use('/assets/img', express.static('./assets/img'));
 app.use('/assets/js', express.static('./assets/js'));
