@@ -41,7 +41,6 @@
                 </tr>
               </thead>
               <tbody class="list">
-                {{log recipients.rows}}
                 {{#each recipients.rows}}
                 {{#ifOverFive @index}}
                 <tr style="display: none" id="table-row-{{@index}}">
@@ -51,7 +50,6 @@
                   <td>{{this.idNumber}}</td>
                 </tr>
                 {{else}}
-                {{log this}}
                 <tr id="table-row-{{@index}}">
                   <td scope="row">{{this.name}}</td>
                   <td>{{this.boxNumber}}</td>
