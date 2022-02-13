@@ -4,8 +4,11 @@ const bodyParser = require('body-parser');
 const path = require('path');
 // const device = require('express-device');
 const http = require('http');
+const { sessions } = require('./util');
 
 const app = express();
+
+app.use(sessions);
 
 app.set('json spaces', 2);
 // app.use(require('helmet')());
