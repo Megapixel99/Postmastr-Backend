@@ -2,8 +2,27 @@ const router = require('express').Router();
 const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
+const { db } = require('../util');
+const { Package } = require('../models/models.js');
 
 function prepareSource(filePath, data, templateName = 'main') {
+  handlebars.registerHelper('ifOverFive', function (index, options) {
+    if(index + 1 > 5){
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+  handlebars.registerHelper('ifModFive', function (index, options) {
+    if((index + 1) % 5 === 0){
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
+  handlebars.registerHelper('paginateByFive', function (index, options) {
+    return Math.ceil((index + 1) / 5) + 1;
+  });
   let partialSource = fs.readFileSync(path.resolve(filePath)).toString();
   handlebars.registerPartial(templateName, handlebars.compile(partialSource));
   let template = handlebars.compile(fs.readFileSync(path.resolve(`${__dirname}/../assets/hbs/main.hbs`)).toString());
@@ -57,9 +76,15 @@ router.get('/find/recipient', (req, res) => {
 });
 
 router.get('/find/package', (req, res) => {
-  return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
-    username: req.session.username,
-  }));
+  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
+      username: req.session.username,
+      packages: packages.length !== 0 ? {
+        headers: Object.keys(packages[0]),
+        rows: packages,
+      } : [],
+    }));
+  })
 });
 
 module.exports = router;
