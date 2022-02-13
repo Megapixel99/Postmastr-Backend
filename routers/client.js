@@ -3,7 +3,7 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 const { db } = require('../util');
-const { Package } = require('../models/models.js');
+const { Package, Recipient } = require('../models/models.js');
 
 function prepareSource(filePath, data, templateName = 'main') {
   handlebars.registerHelper('ifOverFive', function (index, options) {
@@ -70,9 +70,15 @@ router.get('/maps', (req, res) => {
 });
 
 router.get('/find/recipient', (req, res) => {
-  return res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
-    username: req.session.username,
-  }));
+  db().then(() => Recipient.find(null, {__v: 0, _id: 0}).lean()).then(function (recipients) {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
+      username: req.session.username,
+      recipients: recipients.length !== 0 ? {
+        headers: Object.keys(recipients[0]).filter((e) => e !== "packages"),
+        rows: recipients,
+      } : [],
+    }));
+  });
 });
 
 router.get('/find/package', (req, res) => {
@@ -84,7 +90,7 @@ router.get('/find/package', (req, res) => {
         rows: packages,
       } : [],
     }));
-  })
+  });
 });
 
 module.exports = router;
