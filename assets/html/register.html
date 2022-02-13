@@ -228,7 +228,7 @@
   <script type="text/javascript">
     function createAccount() {
       $.ajax({
-        url: `https://post-mastr-mvp.vercel.app/api/user`,
+        url: `/user`,
         type: 'POST',
         data: {
           username: document.getElementById('email').value,

@@ -252,7 +252,7 @@
   <script type="text/javascript">
     function signIn() {
       $.ajax({
-        url: `https://post-mastr-mvp.vercel.app/api/user/signIn`,
+        url: `/user/signIn`,
         type: 'POST',
         data: {
           username: document.getElementById('email').value,
