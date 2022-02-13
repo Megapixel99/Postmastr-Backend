@@ -17,18 +17,9 @@ app.post('*', (req, res) => {
 
 
             } else {
-                const name = req.body.name;
-                const boxNumber = req.body.boxNumber;
-                const email = req.body.email;
-                const idNumber = req.body.idNumber
                 const newRecipient = new Recipient({
-                    name: name,
-                    boxNumber: boxNumber,
-                    email: email,
-                    idNumber: idNumber,
-
-
-
+                  ...req.body,
+                  packagesIds: [],
                 });
                 newRecipient.save().then(() => {
                     return res.status(201).json({
