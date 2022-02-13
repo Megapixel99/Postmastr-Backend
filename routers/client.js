@@ -10,53 +10,54 @@ function prepareSource(filePath, data, templateName = 'main') {
   return template(data);
 }
 
-router.get('/login', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/login.html'));
-});
-
-router.get('/register', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/register.html'));
-});
-
 router.use((req, res, next) => {
-  if (!req.session.username) {
-    return res.redirect(301, '/login');
-  }
+  const nonSessionRoutes = ['/login', '/register'];
+  if (nonSessionRoutes.includes(req.path) && req.session.username) return res.redirect('/');
+  if (nonSessionRoutes.includes(req.path)) return next();
+  if (!req.session.username) return res.redirect('/login');
   next();
 });
 
+router.get('/login', (req, res) => {
+  return res.sendFile(path.resolve('./assets/html/login.html'));
+});
+
+router.get('/register', (req, res) => {
+  return res.sendFile(path.resolve('./assets/html/register.html'));
+});
+
 router.get('/', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
+  return res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
     username: req.session.username,
   }));
 });
 
 router.get('/susPackageReport', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
+  return res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
     username: req.session.username,
   }));
 });
 
 router.get('/usageStatistics', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/usageStatistics.hbs`, {
+  return res.send(prepareSource(`${__dirname}/../assets/hbs/usageStatistics.hbs`, {
     username: req.session.username,
   }));
 });
 
 router.get('/maps', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/maps.hbs`, {
+  return res.send(prepareSource(`${__dirname}/../assets/hbs/maps.hbs`, {
     username: req.session.username,
   }));
 });
 
 router.get('/find/recipient', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
+  return res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
     username: req.session.username,
   }));
 });
 
 router.get('/find/package', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
+  return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
     username: req.session.username,
   }));
 });

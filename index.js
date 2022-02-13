@@ -25,7 +25,6 @@ app.use((req, res, next) => {
 
 // app.use(device.capture({ parseUserAgent: true }));
 
-app.use(require('./routers/client.js'));
 app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
 app.use('/user', require('./routers/api/user/index.js'));
 app.use('/recipient', require('./routers/api/recipient/index.js'));
@@ -38,6 +37,7 @@ app.use('/assets/img', express.static('./assets/img'));
 app.use('/assets/js', express.static('./assets/js'));
 app.use('/assets/scss', express.static('./assets/scss'));
 app.use('/assets/vendor', express.static('./assets/vendor'));
+app.use(require('./routers/client.js'));
 
 app.get('/ping', (req, res) => {
   res.status(200).send('pong');
