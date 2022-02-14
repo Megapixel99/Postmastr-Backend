@@ -16,17 +16,16 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post('*', upload.single('image'), (req, res) => {
-    //testing
-    console.log(req.body);
-    console.log(req.file);
-    //begin reg struct
-    const imgPath = req.file.path;
-    console.log(imgPath);
 
-    //const labelData = tesseract(imgPath);
+    //begin reg struct
+    const img = req.file.path;
+    //console.log(img);
+
+    const labelData = tesseract(img);
+    console.log(labelData);
     return res.status(200).json({
         result: {
-            finalData: imgPath,
+            finalData: labelData,
         },
         message: "Processing Complete",
     });
