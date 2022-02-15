@@ -50,14 +50,29 @@ router.get('/register', (req, res) => {
 
 router.get('/', (req, res) => {
   db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+    let emailSent = _.groupBy(packages.filter((e) => e.emailsSent > 0 && new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
+    let packagesScanned = _.groupBy(packages.filter((e) => new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
     return res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
       username: req.session.username,
       packages: {
-        total: packages,
+        number: packages.length,
+        total: {
+          data: JSON.stringify(Object.values(packagesScanned).map((e) => e.length).reverse()),
+          headers: JSON.stringify(Object.keys(packagesScanned).reverse()),
+        },
         notPickedUp: packages.filter((e) => !e.pickedUp),
         confiscated: packages.filter((e) => e.confiscated),
         lost: packages.filter((e) => e.lost),
-        emailsSent: _.groupBy(packages.filter((e) => e.emailsSent > 0 && new Date(e.recievedDate).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.recievedDate).getMonth()]),
+        emailsSent: {
+          data: JSON.stringify(Object.values(emailSent).map((e) => {
+            if (e.flat().length === 1) {
+              return e[0].emailsSent;
+            } else {
+              return e.reduce(function(a,b){ return a.emailsSent + b.emailsSent; });
+            }
+          }).reverse()),
+          headers: JSON.stringify(Object.keys(emailSent).reverse()),
+        },
       },
     }));
   }).catch(function (err) {
