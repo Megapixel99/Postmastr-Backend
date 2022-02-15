@@ -7,7 +7,8 @@ const packageSchema = new mongoose.Schema({
   carrierName: { type: String, required: true },
   returnAddress: { type: String, required: true },
   recipientAddress: { type: String, required: true },
-  trackingNumber: { type: Number, required: true }
+  trackingNumber: { type: Number, required: true },
+  suspiciousPackage: { type: Boolean, default: false },
 });
 
 const recipientSchema = new mongoose.Schema({
