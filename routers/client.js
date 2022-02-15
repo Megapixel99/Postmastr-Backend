@@ -51,10 +51,16 @@ router.get('/', (req, res) => {
   }));
 });
 
-router.get('/susPackageReport', (req, res) => {
-  return res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
-    username: req.session.username,
-  }));
+router.get('/find/susPackageReport', (req, res) => {
+  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/findSusPackageReport.hbs`, {
+      username: req.session.username,
+      recipients: packages.length !== 0 ? {
+        headers: Object.keys(packages[0]),
+        rows: packages.filter((e) => e.suspiciousPackage),
+      } : [],
+    }));
+  });
 });
 
 router.get('/usageStatistics', (req, res) => {

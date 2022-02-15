@@ -4,19 +4,14 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Package Report</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Packages</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Components</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Suspicious Package Report</li>
+                <li class="breadcrumb-item active" aria-current="page">Find Suspicious Packages</li>
               </ol>
             </nav>
           </div>
-          {{!-- <div class="col-lg-6 col-5 text-right">
-            <a href="#" class="btn btn-sm btn-neutral">New</a>
-            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-          </div> --}}
         </div>
       </div>
     </div>
@@ -27,7 +22,7 @@
       <div class="col">
         <div class="card">
           <div class="card-header border-0" style="display: block ruby;">
-            <h3 class="mb-0" style="width: 75%; line-height: 230%;">Suspicious Package Report</h3>
+            <h3 class="mb-0" style="width: 75%; line-height: 230%;">Suspicious Packages</h3>
             <input type="text" placeholder="Search" id="search" onkeyup="tableLookup(this)" style="border-radius: 5px; border: 1px solid lightgray; float: right; width: 25%; padding: 5px;">
           </div>
           <div class="table-responsive">
@@ -39,39 +34,37 @@
             <table class="table align-items-center table-flush" id="table">
               <thead class="thead-light">
                 <tr>
-                  {{#each susPackages.headers}}
+                  {{#each packages.headers}}
                   <th scope="col" class="sort" data-sort="name">{{this}}</th>
                   {{/each}}
                   <th scope="col"></th>
-                  </tr>
+                </tr>
               </thead>
               <tbody class="list">
-                {{each susPackages.rows}}
+                {{#each packages.rows}}
                 {{#ifOverFive @index}}
                 <tr style="display: none" id="table-row-{{@index}}">
-                  <td scope="row">{{this.employeeName}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.susTracking}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.reportReason}}</td>
-                  <td>{{this.employeeNote}}</td>
-                  <td>{{this.isResolved}}</td>
+                  <td scope="row">{{this.recipient}}</td>
+                  <td>{{this.sender}}</td>
+                  <td>{{this.carrierName}}</td>
+                  <td>{{this.returnAddress}}</td>
+                  <td>{{this.recipientAddress}}</td>
+                  <td>{{this.trackingNumber}}</td>
                 </tr>
                 {{else}}
                 <tr id="table-row-{{@index}}">
-                  <td scope="row">{{this.employeeName}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.susTracking}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.reportReason}}</td>
-                  <td>{{this.employeeNote}}</td>
-                  <td>{{this.isResolved}}</td>
+                  <td scope="row">{{this.recipient}}</td>
+                  <td>{{this.sender}}</td>
+                  <td>{{this.carrierName}}</td>
+                  <td>{{this.returnAddress}}</td>
+                  <td>{{this.recipientAddress}}</td>
+                  <td>{{this.trackingNumber}}</td>
                 </tr>
                 {{/ifOverFive}}
                 {{/each}}
               </tbody>
             </table>
-          </div> 
+          </div>
           <!-- Card footer -->
           <div class="card-footer py-4">
             <nav aria-label="...">
@@ -85,7 +78,7 @@
                 <li class="page-item active">
                   <a class="page-link" id="page-link-1" onclick="changeTablePage(this)">1</a>
                 </li>
-                {{#each susPackages.rows}}
+                {{#each packages.rows}}
                 {{#ifModFive @index}}
                 <li class="page-item">
                   <a class="page-link" id="page-link-{{paginateByFive @index}}" onclick="changeTablePage(this)">{{paginateByFive @index}}</a>
@@ -104,11 +97,8 @@
         </div>
       </div>
     </div>
-        {{!-- </div> --}}
-      {{!-- </div>
-    </div> --}}
     <!-- Footer -->
-    {{!-- <footer class="footer pt-0">
+    <!-- <footer class="footer pt-0">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6">
           <div class="copyright text-center  text-lg-left  text-muted">
@@ -132,7 +122,7 @@
           </ul>
         </div>
       </div>
-    </footer> --}}
+    </footer> -->
   </div>
-  <script type="text/javascript" src="/assets/js/tablePagination.js"></script>
+  <script type="text/javascript" src="/assets/js/tablePagination.js">
 {{/layouts/main}}
