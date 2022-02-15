@@ -65,6 +65,17 @@ router.get('/', (req, res) => {
     res.sendStatus(500);
   });
 });
+
+router.get('/find/susPackageReport', (req, res) => {
+  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/findSusPackageReport.hbs`, {
+      username: req.session.username,
+      packages: packages.length !== 0 ? {
+        headers: Object.keys(packages[0]).filter((e) => !['pickedUp', 'emailSent', 'confiscated', 'lost', 'dateRecieved', 'emailsSent'].includes(e)),
+        rows: packages.filter((e) => e.confiscated),
+      } : [],
+    }));
+  });
 });
 
 router.get('/susPackageReport', (req, res) => {
@@ -94,6 +105,9 @@ router.get('/find/recipient', (req, res) => {
         rows: recipients,
       } : [],
     }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
   });
 });
 
@@ -102,10 +116,13 @@ router.get('/find/package', (req, res) => {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
       username: req.session.username,
       packages: packages.length !== 0 ? {
-        headers: Object.keys(packages[0]),
+        headers: Object.keys(packages[0]).filter((e) => !['pickedUp', 'emailSent', 'confiscated', 'lost', 'dateRecieved', 'emailsSent'].includes(e)),
         rows: packages,
       } : [],
     }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
   });
 });
 
