@@ -8,7 +8,12 @@ const packageSchema = new mongoose.Schema({
   returnAddress: { type: String, required: true },
   recipientAddress: { type: String, required: true },
   trackingNumber: { type: Number, required: true },
-  suspiciousPackage: { type: Boolean, default: false },
+  dateRecieved: { type: Date, required: true },
+  datePickedUp: { type: Date, required: false, default: null },
+  lost: { type: Boolean, required: false, default: false },
+  pickedUp: { type: Boolean, required: false, default: false },
+  confiscated: { type: Boolean, required: false, default: false },
+  emailsSent: { type: Number, required: false, default: 0 },
 });
 
 const recipientSchema = new mongoose.Schema({
@@ -17,7 +22,7 @@ const recipientSchema = new mongoose.Schema({
   email: { type: String, required: true },
   idNumber: { type: String, required: true },
   packagesIds: [{ type: String, required: true }],
-  employeeNote: { type: String, required: false, default: "NA" },
+  employeeNote: { type: String, required: false, default: "" },
 });
 
 const formSchema = new mongoose.Schema({
@@ -25,7 +30,7 @@ const formSchema = new mongoose.Schema({
     timeStamp: { type: Date, required: true },
     susTracking: { type: String, required: true },
     reportReason: { type: String, required: true },
-    employeeNote: { type: String, required: false, default: "NA" },
+    employeeNote: { type: String, required: false, default: "" },
     isResolved: { type: Boolean, default: false }
 });
 
