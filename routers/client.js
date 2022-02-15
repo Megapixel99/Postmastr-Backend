@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const { db } = require('../util');
 const { Package, Recipient } = require('../models/models.js');
+const _ = require('lodash');
+
+let months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 function prepareSource(filePath, data, templateName = 'main') {
   handlebars.registerHelper('ifOverFive', function (index, options) {
@@ -46,9 +49,22 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  return res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
-    username: req.session.username,
-  }));
+  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
+      username: req.session.username,
+      packages: {
+        total: packages,
+        notPickedUp: packages.filter((e) => !e.pickedUp),
+        confiscated: packages.filter((e) => e.confiscated),
+        lost: packages.filter((e) => e.lost),
+        emailsSent: _.groupBy(packages.filter((e) => e.emailsSent > 0 && new Date(e.recievedDate).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.recievedDate).getMonth()]),
+      },
+    }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
 });
 
 router.get('/susPackageReport', (req, res) => {

@@ -4,18 +4,12 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Dashboard</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Default</li>
+                <li class="breadcrumb-item"><i class="fas fa-home"></i></li>
               </ol>
             </nav>
-          </div>
-          <div class="col-lg-6 col-5 text-right">
-            <a href="#" class="btn btn-sm btn-neutral">New</a>
-            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
           </div>
         </div>
         <!-- Card stats -->
@@ -26,8 +20,8 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">total packages received</h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                    <h5 class="card-title text-uppercase text-muted mb-0">Total packages received</h5>
+                    <span class="h2 font-weight-bold mb-0">{{packages.total.length}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -49,7 +43,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">packages awaiting pickup</h5>
-                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                    <span class="h2 font-weight-bold mb-0">{{packages.notPickedUp.length}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -71,7 +65,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">lost packages</h5>
-                    <span class="h2 font-weight-bold mb-0">924</span>
+                    <span class="h2 font-weight-bold mb-0">{{packages.lost.length}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -93,7 +87,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">confiscated packages</h5>
-                    <span class="h2 font-weight-bold mb-0">49,65%</span>
+                    <span class="h2 font-weight-bold mb-0">{{packages.confiscated.length}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -123,7 +117,7 @@
                 <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
                 <h5 class="h3 text-white mb-0"># of emails</h5>
               </div>
-              <div class="col">
+              <!-- <div class="col">
                 <ul class="nav nav-pills justify-content-end">
                   <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
                     <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
@@ -138,7 +132,7 @@
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="card-body">
