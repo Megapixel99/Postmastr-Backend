@@ -35,22 +35,21 @@
               <thead class="thead-light">
                 <tr>
                   {{#each recipients.headers}}
-                  <th scope="col" class="sort" data-sort="name">{{fixCamelCase this}}</th>
+                  <th scope="col" class="sort" data-sort="name" style="text-align: center;">{{fixCamelCase this}}</th>
                   {{/each}}
-                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody class="list">
                 {{#each recipients.rows}}
                 {{#ifOverFive @index}}
-                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/recipient/{{this.idNumber}}'">
+                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/recipient/{{this.idNumber}}'">
                   <td scope="row">{{this.name}}</td>
                   <td>{{this.boxNumber}}</td>
                   <td>{{this.email}}</td>
                   <td>{{this.idNumber}}</td>
                 </tr>
                 {{else}}
-                <tr id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/recipient/{{this.idNumber}}'">
+                <tr id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/recipient/{{this.idNumber}}'">
                   <td scope="row">{{this.name}}</td>
                   <td>{{this.boxNumber}}</td>
                   <td>{{this.email}}</td>

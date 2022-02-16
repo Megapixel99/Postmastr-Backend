@@ -38,15 +38,14 @@
               <thead class="thead-light">
                 <tr>
                   {{#each packages.headers}}
-                  <th scope="col" class="sort" data-sort="name">{{fixCamelCase this}}</th>
+                  <th scope="col" class="sort" data-sort="name" style="text-align: center;">{{fixCamelCase this}}</th>
                   {{/each}}
-                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody class="list">
                 {{#each packages.rows}}
                 {{#ifOverFive @index}}
-                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/package/{{this.uuid}}'">
+                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/package/{{this.uuid}}'">
                   <td scope="row">{{this.recipient}}</td>
                   <td>{{this.sender}}</td>
                   <td>{{this.carrierName}}</td>
@@ -55,7 +54,7 @@
                   <td>{{this.trackingNumber}}</td>
                 </tr>
                 {{else}}
-                <tr id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/package/{{this.uuid}}'">
+                <tr id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/package/{{this.uuid}}'">
                   <td scope="row">{{this.recipient}}</td>
                   <td>{{this.sender}}</td>
                   <td>{{this.carrierName}}</td>
