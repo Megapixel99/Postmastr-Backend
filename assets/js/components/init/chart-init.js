@@ -28,7 +28,7 @@ var Charts = (function() {
 			900: '#212529'
 		},
 		theme: {
-			'default': '#172b4d',
+			'default': '#f8f9fe',
 			'primary': '#a21b1b',
 			'secondary': '#f4f5f7',
 			'info': '#11cdef',
