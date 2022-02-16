@@ -4,11 +4,11 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Packages</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Package Forms</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Find Suspicious Package</li>
+                <li class="breadcrumb-item active" aria-current="page">Find Suspicious Package Form</li>
               </ol>
             </nav>
           </div>
@@ -22,7 +22,7 @@
       <div class="col">
         <div class="card">
           <div class="card-header border-0" style="display: block ruby;">
-            <h3 class="mb-0" style="width: 70%; line-height: 230%;">Suspicious Packages</h3>
+            <h3 class="mb-0" style="width: 70%; line-height: 230%;">Suspicious Package Forms</h3>
             <input type="text" placeholder="Search" id="search" onkeyup="tableLookup(this)" style="border-radius: 5px; border: 1px solid lightgray; float: right; width: 30%; padding: 5px;">
           </div>
           <div class="table-responsive">
@@ -43,22 +43,20 @@
               <tbody class="list">
                 {{#each packages.rows}}
                 {{#ifOverFive @index}}
-                <tr style="display: none" id="table-row-{{@index}}">
-                  <td scope="row">{{this.recipient}}</td>
-                  <td>{{this.sender}}</td>
-                  <td>{{this.carrierName}}</td>
-                  <td>{{this.returnAddress}}</td>
-                  <td>{{this.recipientAddress}}</td>
-                  <td>{{this.trackingNumber}}</td>
+                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/susPackage/{{this.uuid}}'">
+                  <td scope="row">{{this.employeeName}}</td>
+                  <td>{{this.timeStamp}}</td>
+                  <td>{{this.susTracking}}</td>
+                  <td>{{this.reportReason}}</td>
+                  <td>{{this.isResolved}}</td>
                 </tr>
                 {{else}}
-                <tr id="table-row-{{@index}}">
-                  <td scope="row">{{this.recipient}}</td>
-                  <td>{{this.sender}}</td>
-                  <td>{{this.carrierName}}</td>
-                  <td>{{this.returnAddress}}</td>
-                  <td>{{this.recipientAddress}}</td>
-                  <td>{{this.trackingNumber}}</td>
+                <tr id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/susPackage/{{this.uuid}}'">
+                  <td scope="row">{{this.employeeName}}</td>
+                  <td>{{this.timeStamp}}</td>
+                  <td>{{this.susTracking}}</td>
+                  <td>{{this.reportReason}}</td>
+                  <td>{{this.isResolved}}</td>
                 </tr>
                 {{/ifOverFive}}
                 {{/each}}

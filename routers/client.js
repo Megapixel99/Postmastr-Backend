@@ -3,7 +3,7 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 const { db } = require('../util');
-const { Package, Recipient } = require('../models/models.js');
+const { Package, Recipient, SusForm } = require('../models/models.js');
 const _ = require('lodash');
 
 let months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -22,6 +22,10 @@ function prepareSource(filePath, data, templateName = 'main') {
     } else {
       return options.inverse(this);
     }
+  });
+  handlebars.registerHelper('fixCamelCase', function (_str, options) {
+    let str = _str.replace(/(.)([A-Z])/gm, '$1 $2');
+    return `${str[0].toUpperCase()}${str.slice(1)}`;
   });
   handlebars.registerHelper('paginateByFive', function (index, options) {
     return Math.ceil((index + 1) / 5) + 1;
@@ -82,12 +86,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/find/susPackage', (req, res) => {
-  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+  db().then(() => SusForm.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findSusPackage.hbs`, {
       username: req.session.username,
       packages: packages.length !== 0 ? {
-        headers: Object.keys(packages[0]).filter((e) => !['pickedUp', 'emailSent', 'confiscated', 'lost', 'dateRecieved', 'emailsSent'].includes(e)),
-        rows: packages.filter((e) => e.confiscated),
+        headers: Object.keys(packages[0]).filter((e) => !['employeeNote', 'packageUUID', 'uuid'].includes(e)),
+        rows: packages,
       } : [],
     }));
   });
@@ -131,9 +135,50 @@ router.get('/find/package', (req, res) => {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
       username: req.session.username,
       packages: packages.length !== 0 ? {
-        headers: Object.keys(packages[0]).filter((e) => !['pickedUp', 'emailSent', 'confiscated', 'lost', 'dateRecieved', 'emailsSent'].includes(e)),
+        headers: Object.keys(packages[0]).filter((e) => !['pickedUp', 'emailSent', 'uuid', 'confiscated', 'lost', 'dateRecieved', 'emailsSent'].includes(e)),
         rows: packages,
       } : [],
+    }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+router.get('/find/susPackage/:package', (req, res) => {
+  db().then(() => SusForm.findOne({ uuid: req.params.package }, {__v: 0, _id: 0}).lean()).then(function (package) {
+    delete package.uuid;
+    package.linkToPackageInfo = `<a href='/find/package/${package.packageUUID}'>Package Info</a>`;
+    package.employeeNote = package.employeeNote.length ? package.employeeNote : "<i>Note not found</i>";
+    delete package.packageUUID;
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
+      username: req.session.username,
+      package,
+    }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+router.get('/find/package/:package', (req, res) => {
+  db().then(() => Package.findOne({ uuid: req.params.package }, {__v: 0, _id: 0}).lean()).then(function (package) {
+    delete package.uuid;
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/packageInfo.hbs`, {
+      username: req.session.username,
+      package,
+    }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+router.get('/find/recipient/:recipient', (req, res) => {
+  db().then(() => Recipient.findOne({ idNumber: req.params.recipient }, {__v: 0, _id: 0}).lean()).then(function (recipient) {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/recipientInfo.hbs`, {
+      username: req.session.username,
+      recipient,
     }));
   }).catch(function (err) {
     console.error(err);

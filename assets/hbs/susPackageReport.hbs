@@ -4,19 +4,15 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Package Report</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Package Form</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Components</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Suspicious Package Report</li>
+                <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="/find/package">Suspicious Package Forms</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Suspicious Package Form</li>
               </ol>
             </nav>
           </div>
-          {{!-- <div class="col-lg-6 col-5 text-right">
-            <a href="#" class="btn btn-sm btn-neutral">New</a>
-            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-          </div> --}}
         </div>
       </div>
     </div>
@@ -26,89 +22,25 @@
     <div class="row">
       <div class="col">
         <div class="card">
-          <div class="card-header border-0" style="display: block ruby;">
-            <h3 class="mb-0" style="width: 75%; line-height: 230%;">Suspicious Package Report</h3>
-            <input type="text" placeholder="Search" id="search" onkeyup="tableLookup(this)" style="border-radius: 5px; border: 1px solid lightgray; float: right; width: 25%; padding: 5px;">
+          <div class="card-header border-0" style="display: block ruby; border-bottom: 1px solid rgba(0, 0, 0, .05) !important;">
+            <h3 class="mb-0" style="width: 70%; line-height: 230%;">Suspicious Package Form</h3>
           </div>
-          <div class="table-responsive">
-            <!-- may be useful to add this later: <div>
-              <div class="progress">
-                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-              </div>
-            </div> -->
-            <table class="table align-items-center table-flush" id="table">
-              <thead class="thead-light">
-                <tr>
-                  {{#each susPackages.headers}}
-                  <th scope="col" class="sort" data-sort="name">{{this}}</th>
-                  {{/each}}
-                  <th scope="col"></th>
-                  </tr>
-              </thead>
-              <tbody class="list">
-                {{each susPackages.rows}}
-                {{#ifOverFive @index}}
-                <tr style="display: none" id="table-row-{{@index}}">
-                  <td scope="row">{{this.employeeName}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.susTracking}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.reportReason}}</td>
-                  <td>{{this.employeeNote}}</td>
-                  <td>{{this.isResolved}}</td>
-                </tr>
-                {{else}}
-                <tr id="table-row-{{@index}}">
-                  <td scope="row">{{this.employeeName}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.susTracking}}</td>
-                  <td>{{this.timeStamp}}</td>
-                  <td>{{this.reportReason}}</td>
-                  <td>{{this.employeeNote}}</td>
-                  <td>{{this.isResolved}}</td>
-                </tr>
-                {{/ifOverFive}}
-                {{/each}}
-              </tbody>
-            </table>
-          </div> 
+          <div class="table-responsive" style="padding: 0.25rem 1.5rem; padding: 0.25rem 1.5rem; display: grid; grid-template-columns: auto auto;">
+            {{#each package}}
+            <div>
+              <h4 class="mb-0" style="line-height: 230%;">{{fixCamelCase @key}}: </h4>
+              <p class="mb-0" style="line-height: 230%;">{{{this}}}</p>
+            </div>
+            {{/each}}
+          </div>
           <!-- Card footer -->
           <div class="card-footer py-4">
-            <nav aria-label="...">
-              <ul class="pagination justify-content-end mb-0" id="table-pages">
-                <li class="page-item">
-                  <a class="page-link" onclick="changeTablePage(this)">
-                    <i class="fas fa-angle-left"></i>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" id="page-link-1" onclick="changeTablePage(this)">1</a>
-                </li>
-                {{#each susPackages.rows}}
-                {{#ifModFive @index}}
-                <li class="page-item">
-                  <a class="page-link" id="page-link-{{paginateByFive @index}}" onclick="changeTablePage(this)">{{paginateByFive @index}}</a>
-                </li>
-                {{/ifModFive}}
-                {{/each}}
-                <li class="page-item">
-                  <a class="page-link" onclick="changeTablePage(this)">
-                    <i class="fas fa-angle-right"></i>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
       </div>
     </div>
-        {{!-- </div> --}}
-      {{!-- </div>
-    </div> --}}
     <!-- Footer -->
-    {{!-- <footer class="footer pt-0">
+    <!-- <footer class="footer pt-0">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6">
           <div class="copyright text-center  text-lg-left  text-muted">
@@ -132,7 +64,6 @@
           </ul>
         </div>
       </div>
-    </footer> --}}
+    </footer> -->
   </div>
-  <script type="text/javascript" src="/assets/js/tablePagination.js"></script>
 {{/layouts/main}}

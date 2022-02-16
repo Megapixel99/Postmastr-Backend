@@ -43,14 +43,14 @@
               <tbody class="list">
                 {{#each recipients.rows}}
                 {{#ifOverFive @index}}
-                <tr style="display: none" id="table-row-{{@index}}">
+                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/recipient/{{this.idNumber}}'">
                   <td scope="row">{{this.name}}</td>
                   <td>{{this.boxNumber}}</td>
                   <td>{{this.email}}</td>
                   <td>{{this.idNumber}}</td>
                 </tr>
                 {{else}}
-                <tr id="table-row-{{@index}}">
+                <tr id="table-row-{{@index}}" style="cursor: pointer;" onclick="window.location = '/find/recipient/{{this.idNumber}}'">
                   <td scope="row">{{this.name}}</td>
                   <td>{{this.boxNumber}}</td>
                   <td>{{this.email}}</td>
