@@ -35,7 +35,7 @@
               <thead class="thead-light">
                 <tr>
                   {{#each packages.headers}}
-                  <th scope="col" class="sort" data-sort="name">{{this}}</th>
+                  <th scope="col" class="sort" data-sort="name">{{fixCamelCase this}}</th>
                   {{/each}}
                   <th scope="col"></th>
                 </tr>
