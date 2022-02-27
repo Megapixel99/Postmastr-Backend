@@ -10,14 +10,14 @@ let months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept'
 
 function prepareSource(filePath, data, templateName = 'main') {
   handlebars.registerHelper('ifOverFive', function (index, options) {
-    if(index + 1 > 5){
+    if (index + 1 > 5) {
       return options.fn(this);
     } else {
       return options.inverse(this);
     }
   });
   handlebars.registerHelper('ifModFive', function (index, options) {
-    if((index + 1) % 5 === 0){
+    if ((index + 1) % 5 === 0) {
       return options.fn(this);
     } else {
       return options.inverse(this);
@@ -32,31 +32,6 @@ function prepareSource(filePath, data, templateName = 'main') {
   return template(data);
 }
 
-<<<<<<< HEAD
-router.get('/login', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/login.html'));
-});
-
-router.get('/register', (req, res) => {
-  res.sendFile(path.resolve('./assets/html/register.html'));
-});
-
-router.use((req, res, next) => {
-  if (!req.session.username) {
-    return res.redirect(301, '/login');
-  }
-  next();
-});
-
-router.get('/', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
-    username: req.session.username,
-  }));
-});
-
-router.get('/susPackageReport', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
-=======
 router.use((req, res, next) => {
   const nonSessionRoutes = ['/login', '/register'];
   if (nonSessionRoutes.includes(req.path) && req.session.username) return res.redirect('/');
@@ -74,7 +49,7 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+  db().then(() => Package.find(null, { __v: 0, _id: 0 }).lean()).then(function (packages) {
     let emailSent = _.groupBy(packages.filter((e) => e.emailsSent > 0 && new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
     let packagesScanned = _.groupBy(packages.filter((e) => new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
     return res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
@@ -93,7 +68,7 @@ router.get('/', (req, res) => {
             if (e.flat().length === 1) {
               return e[0].emailsSent;
             } else {
-              return e.reduce(function(a,b){ return a.emailsSent + b.emailsSent; });
+              return e.reduce(function (a, b) { return a.emailsSent + b.emailsSent; });
             }
           }).reverse()),
           headers: JSON.stringify(Object.keys(emailSent).reverse()),
@@ -107,7 +82,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/find/susPackageReport', (req, res) => {
-  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+  db().then(() => Package.find(null, { __v: 0, _id: 0 }).lean()).then(function (packages) {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findSusPackageReport.hbs`, {
       username: req.session.username,
       packages: packages.length !== 0 ? {
@@ -120,45 +95,24 @@ router.get('/find/susPackageReport', (req, res) => {
 
 router.get('/susPackageReport', (req, res) => {
   return res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
->>>>>>> 6c8d307abd22a073a997c3ac04379784ecfd3e3c
     username: req.session.username,
   }));
 });
 
 router.get('/usageStatistics', (req, res) => {
-<<<<<<< HEAD
-  res.send(prepareSource(`${__dirname}/../assets/hbs/usageStatistics.hbs`, {
-=======
   return res.send(prepareSource(`${__dirname}/../assets/hbs/usageStatistics.hbs`, {
->>>>>>> 6c8d307abd22a073a997c3ac04379784ecfd3e3c
     username: req.session.username,
   }));
 });
 
 router.get('/maps', (req, res) => {
-<<<<<<< HEAD
-  res.send(prepareSource(`${__dirname}/../assets/hbs/maps.hbs`, {
-=======
   return res.send(prepareSource(`${__dirname}/../assets/hbs/maps.hbs`, {
->>>>>>> 6c8d307abd22a073a997c3ac04379784ecfd3e3c
     username: req.session.username,
   }));
 });
 
-<<<<<<< HEAD
-router.get('/recipientInfo', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/recipientInfo.hbs`, {
-    username: req.session.username,
-  }));
-});
-
-router.get('/packageInfo', (req, res) => {
-  res.send(prepareSource(`${__dirname}/../assets/hbs/packageInfo.hbs`, {
-    username: req.session.username,
-  }));
-=======
 router.get('/find/recipient', (req, res) => {
-  db().then(() => Recipient.find(null, {__v: 0, _id: 0}).lean()).then(function (recipients) {
+  db().then(() => Recipient.find(null, { __v: 0, _id: 0 }).lean()).then(function (recipients) {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
       username: req.session.username,
       recipients: recipients.length !== 0 ? {
@@ -173,7 +127,7 @@ router.get('/find/recipient', (req, res) => {
 });
 
 router.get('/find/package', (req, res) => {
-  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+  db().then(() => Package.find(null, { __v: 0, _id: 0 }).lean()).then(function (packages) {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
       username: req.session.username,
       packages: packages.length !== 0 ? {
@@ -185,7 +139,6 @@ router.get('/find/package', (req, res) => {
     console.error(err);
     res.sendStatus(500);
   });
->>>>>>> 6c8d307abd22a073a997c3ac04379784ecfd3e3c
 });
 
 module.exports = router;

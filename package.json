@@ -21,6 +21,8 @@
     "express-device": "^0.4.2",
     "express-fileupload": "^1.3.1",
     "express-session": "^1.17.2",
+    "file-api": "^0.10.4",
+    "file-saver": "^2.0.5",
     "handlebars": "^4.7.7",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",

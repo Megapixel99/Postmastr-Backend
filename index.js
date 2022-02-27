@@ -25,7 +25,6 @@ app.use((req, res, next) => {
 
 // app.use(device.capture({ parseUserAgent: true }));
 
-<<<<<<< HEAD
 
 
 app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
@@ -33,13 +32,6 @@ app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
 app.use('/user', require('./routers/api/user/index.js'));
 app.use('/imageProcessing', require('./routers/api/imageProcessing/index.js'));
 app.use('/recipient', require('./routers/api/recipient/index.js'));
-=======
-app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
-
-app.use('/imageProcessing', require('./routers/api/imageProcessing/index.js'));
-app.use('/user', require('./routers/api/user/index.js'));
-app.use('/recipienxt', require('./routers/api/recipient/index.js'));
->>>>>>> 6c8d307abd22a073a997c3ac04379784ecfd3e3c
 app.use('/package/input', require('./routers/api/package/input/index.js'));
 app.use('/package/output', require('./routers/api/package/output/index.js'));
 
