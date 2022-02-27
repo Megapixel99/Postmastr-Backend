@@ -2,7 +2,7 @@ const app = require('express').Router();
 const connectDB = require('../../../util/db.js');
 const { User } = require('../../../models/models.js');
 const bcrypt = require('bcryptjs');
-
+const env = require('../../../util/environment.js');
 
 app.post('*', (req, res) => {
     connectDB()
@@ -22,7 +22,16 @@ app.post('*', (req, res) => {
                 //User.create({ username: name, password: pass });
                 const newUser = new User({ username: name, password: pass });
                 newUser.save().then(() => {
-                  req.session.user = finalUser.username;
+                    const token = jwt.sign(
+                        { user_id: user._id, username },
+                        env.jwtToken,
+                        {
+                            expiresIn: "2h",
+                        }
+                    );
+                    // save user token
+                    user.token = token;
+                    req.session.user = finalUser.username;
                     return res.status(201).json({
                         result: {
                             username: newUser.username,

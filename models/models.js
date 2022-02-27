@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const packageSchema = new mongoose.Schema({
-  recipient: { type: String, required: true },
-  sender: { type: String, required: true },
-  carrierName: { type: String, required: true },
-  returnAddress: { type: String, required: true },
-  recipientAddress: { type: String, required: true },
-  trackingNumber: { type: Number, required: true }
+    recipient: { type: String, required: true },
+    sender: { type: String, required: true },
+    carrierName: { type: String, required: true },
+    returnAddress: { type: String, required: true },
+    recipientAddress: { type: String, required: true },
+    trackingNumber: { type: Number, required: true }
 });
 
 const recipientSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  boxNumber: { type: Number, required: true },
-  email: { type: String, required: true },
-  idNumber: { type: String, required: true }
+    name: { type: String, required: true },
+    boxNumber: { type: Number, required: true },
+    email: { type: String, required: true },
+    idNumber: { type: String, required: true }
 });
 
 const formSchema = new mongoose.Schema({
@@ -28,7 +28,8 @@ const formSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, default: "Jim" },
-    password: { type: String, required: true, default: "pass" }
+    password: { type: String, required: true, default: "pass" },
+    token: { type: String }
 });
 /*userSchema.pre('save', function (next) {
     const user = this;
@@ -53,7 +54,7 @@ userSchema.method('comparePassword', function (candidatePassword) {
 });
 
 module.exports = {
-  Package: mongoose.model("Package", packageSchema),
-  Recipient: mongoose.model("recipient", recipientSchema),
-  User: mongoose.model("User", userSchema),
+    Package: mongoose.model("Package", packageSchema),
+    Recipient: mongoose.model("recipient", recipientSchema),
+    User: mongoose.model("User", userSchema),
 };

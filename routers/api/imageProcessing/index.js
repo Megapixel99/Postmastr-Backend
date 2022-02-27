@@ -1,6 +1,9 @@
 const app = require('express').Router();
 const multer = require('multer');
 const { tesseract } = require('../../../util');
+const sharp = require('sharp');
+const auth = require("../../../middleware/auth");
+
 
 
 var storage = multer.diskStorage({
@@ -15,20 +18,38 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.post('*', upload.single('image'), async (req, res) => {
+app.post('*', auth, upload.single('image'), async (req, res) => {
 
     //begin reg struct
     const img = req.file.path;
+    const metadata = await sharp(req.file.path).metadata();
+    console.log("Acquire Original Dimensions");
+    const origWidth = metadata.width;
+    const origHeight = metadata.height;
+    console.log("Original dimensions acquired");
 
-    const labelData = (await tesseract(img));
+
+    console.log("begin resizing");
+    const resizedImage = Buffer.from(
+        await sharp(req.file.path).resize(1200, 1350,
+            { fit: 'contain' }).toBuffer(), 'hex');
+
+    /*await sharp(req.file.path).resize(1000, 1000, {
+        fit: 'contain'
+    }).toBuffer()
+        .then(newImg => {
+            console.log("resizing successful");
+            return newImg;
+        });*/
+    console.log(resizedImage);
+    const labelData = (await tesseract(resizedImage));
     console.log(labelData);
+
     return res.status(200).json({
         result: {
-            finalData: labelData,
+            finalData: labelData
         },
         message: "Processing Complete",
     });
-
-
 });
 module.exports = app;

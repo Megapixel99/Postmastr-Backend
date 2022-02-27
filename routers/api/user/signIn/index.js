@@ -2,6 +2,7 @@ const app = require('express').Router();
 const connectDB = require("../../../../util/db.js");
 const { User } = require('../../../../models/models.js');
 const bcrypt = require("bcryptjs");
+const env = require('../../../../util/environment.js');
 app.post("*", (req, res) => {
     let finalUser;
     connectDB()
@@ -30,7 +31,16 @@ app.post("*", (req, res) => {
                 });
 
             } else {
-              req.session.user = finalUser.username;
+                const token = jwt.sign(
+                    { user_id: user._id, username },
+                    env.jwtToken,
+                    {
+                        expiresIn: "2h",
+                    }
+                );
+                // save user token
+                user.token = token;
+                req.session.user = finalUser.username;
                 return res.status(200).json({
                     result: {
                         username: finalUser.username,
