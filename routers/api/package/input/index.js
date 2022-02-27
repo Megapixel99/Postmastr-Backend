@@ -27,7 +27,7 @@ app.post('*', (req, res) => {
                     returnAddress: fromAddress,
                     recipientAddress: toAddress,
                     trackingNumber: trackingNo,
-
+                    dateRecieved: new Date(),
 
 
 
@@ -36,15 +36,7 @@ app.post('*', (req, res) => {
                 })
                 newPackage.save().then(() => {
                     return res.status(201).json({
-                        result: {
-                            recipient: newPackage.recipient,
-                            sender: newPackage.sender,
-                            carrierName: newPackage.carrierName,
-                            returnAddress: newPackage.returnAddress,
-                            recipientAddress: newPackage.recipientAddress,
-                            trackingNumber: newPackage.trackingNumber,
-
-                        }
+                        result: newPackage
                     })
 
                 })
