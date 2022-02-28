@@ -4,11 +4,11 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Packages</h6>
+            <h6 class="h2 text-white d-inline-block mb-0">Suspicious Package Forms</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
               <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Find Suspicious Packages</li>
+                <li class="breadcrumb-item active" aria-current="page">Find Suspicious Package Form</li>
               </ol>
             </nav>
           </div>
@@ -22,8 +22,8 @@
       <div class="col">
         <div class="card">
           <div class="card-header border-0" style="display: block ruby;">
-            <h3 class="mb-0" style="width: 75%; line-height: 230%;">Suspicious Packages</h3>
-            <input type="text" placeholder="Search" id="search" onkeyup="tableLookup(this)" style="border-radius: 5px; border: 1px solid lightgray; float: right; width: 25%; padding: 5px;">
+            <h3 class="mb-0" style="width: 70%; line-height: 230%;">Suspicious Package Forms</h3>
+            <input type="text" placeholder="Search" id="search" onkeyup="tableLookup(this)" style="border-radius: 5px; border: 1px solid lightgray; float: right; width: 30%; padding: 5px;">
           </div>
           <div class="table-responsive">
             <!-- may be useful to add this later: <div>
@@ -35,30 +35,27 @@
               <thead class="thead-light">
                 <tr>
                   {{#each packages.headers}}
-                  <th scope="col" class="sort" data-sort="name">{{this}}</th>
+                  <th scope="col" class="sort" data-sort="name" style="text-align: center;">{{fixCamelCase this}}</th>
                   {{/each}}
-                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody class="list">
                 {{#each packages.rows}}
                 {{#ifOverFive @index}}
-                <tr style="display: none" id="table-row-{{@index}}">
-                  <td scope="row">{{this.recipient}}</td>
-                  <td>{{this.sender}}</td>
-                  <td>{{this.carrierName}}</td>
-                  <td>{{this.returnAddress}}</td>
-                  <td>{{this.recipientAddress}}</td>
-                  <td>{{this.trackingNumber}}</td>
+                <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/susPackage/{{this.uuid}}'">
+                  <td scope="row">{{this.employeeName}}</td>
+                  <td>{{this.timeStamp}}</td>
+                  <td>{{this.susTracking}}</td>
+                  <td>{{this.reportReason}}</td>
+                  <td>{{this.isResolved}}</td>
                 </tr>
                 {{else}}
-                <tr id="table-row-{{@index}}">
-                  <td scope="row">{{this.recipient}}</td>
-                  <td>{{this.sender}}</td>
-                  <td>{{this.carrierName}}</td>
-                  <td>{{this.returnAddress}}</td>
-                  <td>{{this.recipientAddress}}</td>
-                  <td>{{this.trackingNumber}}</td>
+                <tr id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/susPackage/{{this.uuid}}'">
+                  <td scope="row">{{this.employeeName}}</td>
+                  <td>{{this.timeStamp}}</td>
+                  <td>{{this.susTracking}}</td>
+                  <td>{{this.reportReason}}</td>
+                  <td>{{this.isResolved}}</td>
                 </tr>
                 {{/ifOverFive}}
                 {{/each}}
@@ -97,32 +94,6 @@
         </div>
       </div>
     </div>
-    <!-- Footer -->
-    <!-- <footer class="footer pt-0">
-      <div class="row align-items-center justify-content-lg-between">
-        <div class="col-lg-6">
-          <div class="copyright text-center  text-lg-left  text-muted">
-            &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer> -->
   </div>
-  <script type="text/javascript" src="/assets/js/tablePagination.js">
+  <script type="text/javascript" src="/assets/js/tablePagination.js"></script>
 {{/layouts/main}}

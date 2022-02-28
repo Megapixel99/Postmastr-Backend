@@ -31,6 +31,7 @@ app.post("*", (req, res) => {
                 });
 
             } else {
+
                 const token = jwt.sign(
                     { user_id: user._id, username },
                     env.jwtToken,
@@ -40,7 +41,8 @@ app.post("*", (req, res) => {
                 );
                 // save user token
                 user.token = token;
-                req.session.user = finalUser.username;
+                req.session.username = finalUser.username;
+
                 return res.status(200).json({
                     result: {
                         username: finalUser.username,
