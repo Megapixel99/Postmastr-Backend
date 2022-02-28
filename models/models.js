@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const uuid = require('uuid').v4;
 
 const packageSchema = new mongoose.Schema({
+
   uuid: { type: String, required: false, default: uuid() },
   recipient: { type: String, required: true },
   sender: { type: String, required: true },
@@ -15,15 +16,16 @@ const packageSchema = new mongoose.Schema({
   lost: { type: Boolean, required: false, default: false },
   pickedUp: { type: Boolean, required: false, default: false },
   emailsSent: { type: Number, required: false, default: 0 },
+
 });
 
 const recipientSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  boxNumber: { type: Number, required: true },
-  email: { type: String, required: true },
-  idNumber: { type: String, required: true },
-  packagesIds: [{ type: String, required: true }],
-  employeeNote: { type: String, required: false, default: "" },
+    name: { type: String, required: true },
+    boxNumber: { type: Number, required: true },
+    email: { type: String, required: true },
+    idNumber: { type: String, required: true },
+    packagesIds: [{ type: String, required: true }],
+    employeeNote: { type: String, required: false, default: "" },
 });
 
 const formSchema = new mongoose.Schema({
@@ -39,7 +41,8 @@ const formSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, default: "Jim" },
-    password: { type: String, required: true, default: "pass" }
+    password: { type: String, required: true, default: "pass" },
+    token: { type: String }
 });
 /*userSchema.pre('save', function (next) {
     const user = this;

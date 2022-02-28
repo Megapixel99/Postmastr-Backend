@@ -25,16 +25,19 @@ app.use((req, res, next) => {
 
 // app.use(device.capture({ parseUserAgent: true }));
 
+
+
 app.use('/user/signIn', require('./routers/api/user/signIn/index.js'));
 
-app.use('/imageProcessing', require('./routers/api/imageProcessing/index.js'));
 app.use('/user', require('./routers/api/user/index.js'));
-app.use('/recipienxt', require('./routers/api/recipient/index.js'));
+app.use('/imageProcessing', require('./routers/api/imageProcessing/index.js'));
+app.use('/recipient', require('./routers/api/recipient/index.js'));
 app.use('/package/input', require('./routers/api/package/input/index.js'));
 app.use('/package/output', require('./routers/api/package/output/index.js'));
 
 
 app.use('/assets/css', express.static('./assets/css'));
+app.use(require('./routers/client.js'));
 app.use('/assets/fonts/nucleo', express.static('./assets/fonts/nucleo'));
 app.use('/assets/img', express.static('./assets/img'));
 app.use('/assets/js', express.static('./assets/js'));

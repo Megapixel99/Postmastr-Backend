@@ -10,14 +10,14 @@ let months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept'
 
 function prepareSource(filePath, data, templateName = 'main') {
   handlebars.registerHelper('ifOverFive', function (index, options) {
-    if(index + 1 > 5){
+    if (index + 1 > 5) {
       return options.fn(this);
     } else {
       return options.inverse(this);
     }
   });
   handlebars.registerHelper('ifModFive', function (index, options) {
-    if((index + 1) % 5 === 0){
+    if ((index + 1) % 5 === 0) {
       return options.fn(this);
     } else {
       return options.inverse(this);
@@ -60,7 +60,7 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+  db().then(() => Package.find(null, { __v: 0, _id: 0 }).lean()).then(function (packages) {
     let emailSent = _.groupBy(packages.filter((e) => e.emailsSent > 0 && new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
     let packagesScanned = _.groupBy(packages.filter((e) => new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
     return res.send(prepareSource(`${__dirname}/../assets/hbs/dashboard.hbs`, {
@@ -79,7 +79,7 @@ router.get('/', (req, res) => {
             if (e.flat().length === 1) {
               return e[0].emailsSent;
             } else {
-              return e.reduce(function(a,b){ return a.emailsSent + b.emailsSent; });
+              return e.reduce(function (a, b) { return a.emailsSent + b.emailsSent; });
             }
           }).reverse()),
           headers: JSON.stringify(Object.keys(emailSent).reverse()),
@@ -91,6 +91,7 @@ router.get('/', (req, res) => {
     res.sendStatus(500);
   });
 });
+
 
 router.get('/find/susPackage', (req, res) => {
   db().then(() => SusForm.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
@@ -123,7 +124,7 @@ router.get('/maps', (req, res) => {
 });
 
 router.get('/find/recipient', (req, res) => {
-  db().then(() => Recipient.find(null, {__v: 0, _id: 0}).lean()).then(function (recipients) {
+  db().then(() => Recipient.find(null, { __v: 0, _id: 0 }).lean()).then(function (recipients) {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
       username: req.session.username,
       recipients: recipients.length !== 0 ? {
@@ -138,7 +139,7 @@ router.get('/find/recipient', (req, res) => {
 });
 
 router.get('/find/package', (req, res) => {
-  db().then(() => Package.find(null, {__v: 0, _id: 0}).lean()).then(function (packages) {
+  db().then(() => Package.find(null, { __v: 0, _id: 0 }).lean()).then(function (packages) {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findPackage.hbs`, {
       username: req.session.username,
       packages: packages.length !== 0 ? {
