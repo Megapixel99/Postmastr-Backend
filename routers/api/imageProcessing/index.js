@@ -25,7 +25,6 @@ app.post('*',/* auth,*/ upload.single('image'), async (req, res) => {
     const origWidth = metadata.width;
     const origHeight = metadata.height;
     console.log("Original dimensions acquired");
-    console.log(req.file.path);
     if ((origWidth < 1000) && (origHeight < 1000)) {
         console.log("begin resizing");
         const resizedImage =
