@@ -1,19 +1,22 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const uuid = require('uuid').v4;
 
 const packageSchema = new mongoose.Schema({
-    recipient: { type: String, required: true },
-    sender: { type: String, required: true },
-    carrierName: { type: String, required: true },
-    returnAddress: { type: String, required: true },
-    recipientAddress: { type: String, required: true },
-    trackingNumber: { type: Number, required: true },
-    dateRecieved: { type: Date, required: true },
-    datePickedUp: { type: Date, required: false, default: null },
-    lost: { type: Boolean, required: false, default: false },
-    pickedUp: { type: Boolean, required: false, default: false },
-    confiscated: { type: Boolean, required: false, default: false },
-    emailsSent: { type: Number, required: false, default: 0 },
+
+  uuid: { type: String, required: false, default: uuid() },
+  recipient: { type: String, required: true },
+  sender: { type: String, required: true },
+  carrierName: { type: String, required: true },
+  returnAddress: { type: String, required: true },
+  recipientAddress: { type: String, required: true },
+  trackingNumber: { type: Number, required: true },
+  dateRecieved: { type: Date, required: true },
+  datePickedUp: { type: Date, required: false, default: null },
+  lost: { type: Boolean, required: false, default: false },
+  pickedUp: { type: Boolean, required: false, default: false },
+  emailsSent: { type: Number, required: false, default: 0 },
+
 });
 
 const recipientSchema = new mongoose.Schema({
@@ -26,12 +29,14 @@ const recipientSchema = new mongoose.Schema({
 });
 
 const formSchema = new mongoose.Schema({
+    uuid: { type: String, required: false, default: uuid() },
     employeeName: { type: String, required: true },
     timeStamp: { type: Date, required: true },
     susTracking: { type: String, required: true },
     reportReason: { type: String, required: true },
     employeeNote: { type: String, required: false, default: "" },
-    isResolved: { type: Boolean, default: false }
+    isResolved: { type: Boolean, default: false },
+    packageUUID: { type: String, required: true },
 });
 
 const userSchema = new mongoose.Schema({
@@ -62,7 +67,8 @@ userSchema.method('comparePassword', function (candidatePassword) {
 });
 
 module.exports = {
-    Package: mongoose.model("Package", packageSchema),
-    Recipient: mongoose.model("recipient", recipientSchema),
-    User: mongoose.model("User", userSchema),
+  Package: mongoose.model("Package", packageSchema),
+  Recipient: mongoose.model("recipient", recipientSchema),
+  User: mongoose.model("User", userSchema),
+  SusForm: mongoose.model("SusForm", formSchema),
 };

@@ -3,7 +3,9 @@ const connectDB = require("../../../../util/db.js");
 const { User } = require('../../../../models/models.js');
 const bcrypt = require("bcryptjs");
 const env = require('../../../../util/environment.js');
+var jwt = require('jsonwebtoken');
 app.post("*", (req, res) => {
+
     let finalUser;
     connectDB()
         .then(() => {
@@ -19,6 +21,7 @@ app.post("*", (req, res) => {
                 });
             }
             finalUser = user;
+            username = user.username;
             console.log("user found");
             bool = user.comparePassword(req.body.password);
             if (!bool) {
@@ -31,7 +34,8 @@ app.post("*", (req, res) => {
                 });
 
             } else {
-                const token = jwt.sign(
+
+                /*const token = jwt.sign(
                     { user_id: user._id, username },
                     env.jwtToken,
                     {
@@ -40,7 +44,9 @@ app.post("*", (req, res) => {
                 );
                 // save user token
                 user.token = token;
-                req.session.user = finalUser.username;
+                */
+                req.session.username = finalUser.username;
+
                 return res.status(200).json({
                     result: {
                         username: finalUser.username,
