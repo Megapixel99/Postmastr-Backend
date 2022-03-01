@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 app.post('*',/* auth,*/ upload.single('image'), async (req, res) => {
 
     //begin reg struct
-    img = req.file.path;
+    const img = req.file.path;
     const metadata = await sharp(req.file.path).metadata();
     console.log("Acquire Original Dimensions");
     const origWidth = metadata.width;
