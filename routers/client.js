@@ -111,10 +111,27 @@ router.get('/susPackageReport', (req, res) => {
   }));
 });
 
+function combineData (data) {
+  let str = `${Object.keys(data[0]).join(',')}\n`;
+  for(let i = 0; i < data.length; i++) {
+    str += `${Object.values(data[i]).join(',')}\n`;
+  }
+  return str;
+}
 router.get('/usageStatistics', (req, res) => {
-  return res.send(prepareSource(`${__dirname}/../assets/hbs/usageStatistics.hbs`, {
-    username: req.session.username,
-  }));
+  Promise.all([Recipient.find(null, {_v: 0, id: 0}).lean()
+    , Package.find(null, {_v: 0, id: 0}).lean()
+    , SusForm.find(null, {_v: 0, id: 0}).lean()]).then((data) => {
+    return res.send(prepareSource(`${__dirname}/../assets/hbs/usageStatistics.hbs`, {
+      username: req.session.username,
+      recipients: combineData(data[0]),
+      packages: combineData(data[1]),
+      susForm: combineData(data[2]),
+    }));
+  }).catch(function (err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 router.get('/maps', (req, res) => {

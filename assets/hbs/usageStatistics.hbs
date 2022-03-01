@@ -23,10 +23,88 @@
   <div class="container-fluid mt--6">
     <div class="row">
       <div class="col">
-        <div class="card border-0">
-          <div id="Usage Statistics-default" class="Usage Statistics-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>
+        <div class="card">
+          <div class="text-center text-muted mb-4">
+          <div class="card-header border-0" style="display: block ruby;">
+          <h2 class="mb-0" style="width: 70%; line-height: 230%;">Packages Report</h2></div>
+          <div class="card-header border-0" style="display: block ruby;">
+          <button id='/export/csv' type="submit" class="btn btn-primary mt-0" onclick="exportPackages()">Export CSV</button>
+          </div>
+        <div class="card-header border-0" style="display: block ruby;">
+          <h2 class="mb-0" style="width: 70%; line-height: 230%;">Recipient Report</h2></div>
+          <div class="card-header border-0" style="display: block ruby;">
+          <button id='/export/csv' type="submit" class="btn btn-primary mt-0" onclick="exportRecipients()">Export CSV</button>
+          </div>
+        <div class="card-header border-0" style="display: block ruby;">
+          <h2 class="mb-0" style="width: 70%; line-height: 230%;">Suspicious Package Report</h2></div>
+          <div class="card-header border-0" style="display: block ruby;">
+          <button id='/export/csv' type="submit" class="btn btn-primary mt-0" onclick="exportSusForm()">Export CSV</button>
+          </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+
+
+
+    <!-- Page content -->
+    {{!-- <div class="container mt--0">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary border-0 mb-0">
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <div class="card-header border-0" style="display: block ruby;">
+          <h3 class="mb-0" style="width: 70%; line-height: 230%;">Packages Report</h3></div>
+           <div class="card-header border-0" style="display: block ruby;">
+          <button id='/export/csv' type="submit" class="btn btn-primary mt-0" onclick="exportPackages()">Export CSV</button>
+          </div>
+          <div class="card-header border-0" style="display: block ruby;">
+          <h3 class="mb-0" style="width: 70%; line-height: 230%;">Recipient Report</h3></div>
+          <div class="card-header border-0" style="display: block ruby;">
+          <button id='/export/csv' type="submit" class="btn btn-primary mt-0" onclick="exportRecipients()">Export CSV</button>
+          </div>
+        <div class="card-header border-0" style="display: block ruby;">
+          <h3 class="mb-0" style="width: 70%; line-height: 230%;">Suspicious Package Report</h3></div>
+          <div class="card-header border-0" style="display: block ruby;">
+          <button id='/export/csv' type="submit" class="btn btn-primary mt-0" onclick="exportSusForm()">Export CSV</button>
+          </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> --}}
+
+
+<script type="text/javascript">
+function downloadFile(fileName, data) {
+let blob = new Blob([data], {type: "text/csv"});
+          let a = document.createElement('a');
+          let url = window.URL.createObjectURL(blob);
+          a.href = url;
+          a.download = fileName + `.csv`;
+          document.body.append(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(url);
+}
+
+function exportPackages() {
+  console.log("hi");
+  downloadFile("packages", `{{packages}}`)
+}
+
+function exportRecipients() {
+  downloadFile("recipients", `{{recipients}}`)
+}
+
+function exportSusForm() {
+  downloadFile("susForm", `{{susForm}}`)
+}
+</script>
+
 {{/layouts/main}}
+
