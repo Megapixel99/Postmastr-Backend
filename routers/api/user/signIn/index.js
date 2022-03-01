@@ -6,6 +6,7 @@ const env = require('../../../../util/environment.js');
 const jwt = require("jsonwebtoken");
 
 app.post("*", (req, res) => {
+
     let finalUser;
     connectDB()
         .then(() => {
@@ -21,6 +22,7 @@ app.post("*", (req, res) => {
                 });
             }
             finalUser = user;
+            username = user.username;
             console.log("user found");
             bool = user.comparePassword(req.body.password);
             if (!bool) {
@@ -35,7 +37,7 @@ app.post("*", (req, res) => {
             } else {
 
                 const token = jwt.sign(
-                    { user_id: user._id, username },
+                    { user_id: user._id, username: finalUser.username },
                     env.jwtToken,
                     {
                         expiresIn: "2h",

@@ -6,6 +6,7 @@ const env = require('../../../util/environment.js');
 const jwt = require("jsonwebtoken");
 
 app.post('*', (req, res) => {
+    let finalUser;
     connectDB()
         .then(() => {
             return User.findOne({ username: req.body.username });
@@ -18,21 +19,23 @@ app.post('*', (req, res) => {
                     message: "You tried to create a duplicate",
                 });
             } else {
+                finalUser = user;
                 const name = req.body.username;
                 const pass = bcrypt.hashSync(req.body.password, 6);
                 //User.create({ username: name, password: pass });
                 const newUser = new User({ username: name, password: pass });
                 newUser.save().then(() => {
+                    /*
                     const token = jwt.sign(
-                        { user_id: user._id, username },
+                        { user_id: user._id, name },
                         env.jwtToken,
                         {
                             expiresIn: "2h",
                         }
                     );
                     // save user token
-                    user.token = token;
-                    req.session.user = finalUser.username;
+                    user.token = token;*/
+                    req.session.username = newUser.username;
                     return res.status(201).json({
                         result: {
                             username: newUser.username,
