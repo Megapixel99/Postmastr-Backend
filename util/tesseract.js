@@ -26,15 +26,16 @@ module.exports = function (imagePath) {
         pt2 = capsText.substr(sliceEnd, capsText.length - 1).split("\n");
         console.log(pt1);
         console.log(pt2);
-        return "stub";
-
-
-
-
-
-
-
-
+        let toAddress = pt2.slice(0, 4).join();
+        if (pt2[5].length < 15) {
+            tracking = pt2[6];
+        } else {
+            tracking = pt2[5]
+        }
+        console.log(text);
+        console.log(tracking);
+        console.log(toAddress);
+        return text;
         ;
     })();
 };
