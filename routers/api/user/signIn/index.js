@@ -3,6 +3,8 @@ const connectDB = require("../../../../util/db.js");
 const { User } = require('../../../../models/models.js');
 const bcrypt = require("bcryptjs");
 const env = require('../../../../util/environment.js');
+const jwt = require("jsonwebtoken");
+
 app.post("*", (req, res) => {
     let finalUser;
     connectDB()
@@ -33,7 +35,7 @@ app.post("*", (req, res) => {
             } else {
 
                 const token = jwt.sign(
-                    { user_id: user._id, username },
+                    { user_id: user._id, username: finalUser.username },
                     env.jwtToken,
                     {
                         expiresIn: "2h",
