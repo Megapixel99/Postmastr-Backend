@@ -3,6 +3,8 @@ const connectDB = require("../../../../util/db.js");
 const { User } = require('../../../../models/models.js');
 const bcrypt = require("bcryptjs");
 const env = require('../../../../util/environment.js');
+const jwt = require("jsonwebtoken");
+
 app.post("*", (req, res) => {
     let finalUser;
     connectDB()
