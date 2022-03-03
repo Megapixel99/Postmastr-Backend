@@ -56,6 +56,12 @@ router.get('/register', (req, res) => {
   return res.sendFile(path.resolve('./assets/html/register.html'));
 });
 
+router.get('/logout', (req, res) => {
+  req.session.destroy(function () {
+    res.redirect('/login');
+  });
+});
+
 router.get('/', (req, res) => {
   db().then(() => Package.find(null, { __v: 0, _id: 0 }).lean()).then(function (packages) {
     let emailSent = _.groupBy(packages.filter((e) => e.emailsSent > 0 && new Date(e.dateRecieved).getFullYear() === new Date().getFullYear()), (data) => months[new Date(data.dateRecieved).getMonth()]);
