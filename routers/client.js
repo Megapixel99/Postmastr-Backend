@@ -39,13 +39,10 @@ function prepareSource(filePath, data, templateName = 'main') {
 router.use((req, res, next) => {
   const nonSessionRoutes = ['/login', '/register'];
   if (nonSessionRoutes.includes(req.path) && req.session.username){
-    console.log("p");
     return res.redirect('/')
   };
   if (nonSessionRoutes.includes(req.path)) return next();
   if (!req.session.username) {
-    console.log(req.session);
-    console.log("l");
     return res.redirect('/login')
   };
   next();
