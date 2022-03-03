@@ -23,6 +23,13 @@ function prepareSource(filePath, data, templateName = 'main') {
       return options.inverse(this);
     }
   });
+  handlebars.registerHelper('ifPath', function (path1, path2, options) {
+    if (path1 === path2) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
   handlebars.registerHelper('fixCamelCase', function (_str, options) {
     let str = _str.replace(/(.)([A-Z])/gm, '$1 $2');
     return `${str[0].toUpperCase()}${str.slice(1)}`;
@@ -88,6 +95,7 @@ router.get('/', (req, res) => {
           headers: JSON.stringify(Object.keys(emailSent).reverse()),
         },
       },
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
@@ -104,6 +112,7 @@ router.get('/find/susPackage', (req, res) => {
         headers: Object.keys(packages[0]).filter((e) => !['employeeNote', 'packageUUID', 'uuid'].includes(e)),
         rows: packages,
       } : [],
+      path: req.path,
     }));
   });
 });
@@ -130,6 +139,7 @@ router.get('/usageStatistics', (req, res) => {
       recipients: combineData(data[0]),
       packages: combineData(data[1]),
       susForm: combineData(data[2]),
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
@@ -151,6 +161,7 @@ router.get('/find/recipient', (req, res) => {
         headers: Object.keys(recipients[0]).filter((e) => e !== "packages"),
         rows: recipients,
       } : [],
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
@@ -166,6 +177,7 @@ router.get('/find/package', (req, res) => {
         headers: Object.keys(packages[0]).filter((e) => !['pickedUp', 'emailSent', 'uuid', 'confiscated', 'lost', 'dateRecieved', 'emailsSent'].includes(e)),
         rows: packages,
       } : [],
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
@@ -182,6 +194,7 @@ router.get('/find/susPackage/:package', (req, res) => {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/susPackageReport.hbs`, {
       username: req.session.username,
       package,
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
@@ -195,6 +208,7 @@ router.get('/find/package/:package', (req, res) => {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/packageInfo.hbs`, {
       username: req.session.username,
       package,
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
@@ -207,6 +221,7 @@ router.get('/find/recipient/:recipient', (req, res) => {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/recipientInfo.hbs`, {
       username: req.session.username,
       recipient,
+      path: req.path,
     }));
   }).catch(function (err) {
     console.error(err);
