@@ -15,10 +15,27 @@ module.exports = function (imagePath) {
         const { data: { text } } = await worker.recognize(imagePath);
         await worker.terminate();
         capsText = text.toUpperCase(); //Convert text to uppercase for uniformity
-
-        const regex = RegExp(/#\s[0-9]{4}/);
-        let boxNum = parseInt(regex.exec(text).toString().substring(2));
+        let regex;
+        let boxNum;
+        if (RegExp(/#\s[0-9]{4}/).test(capsText)){
+            regex = RegExp(/#\s[0-9]{4}/);
+            boxNum = regex.exec(capsText).toString().substring(2);
+        }
+        else if (RegExp(/UNIT\s[0-9]{4}/).test(capsText)){
+            regex = RegExp(/UNIT\s[0-9]{4}/);
+            boxNum = regex.exec(capsText).toString().substring(5);
+        }
+        else if (RegExp(/#[0-9]{4}\s/).test(capsText)){
+            regex = RegExp(/#[0-9]{4}\s/);
+            boxNum = regex.exec(capsText).toString().substring(1, 5);
+        }
+        else if (RegExp(/BOX [0-9]{4}/).test(capsText)){
+            regex = RegExp(/BOX [0-9]{4}/);
+            boxNum = regex.exec(capsText).toString().substring(4);
+        }
+        boxNum = parseInt(boxNum);
         console.log(boxNum);
+        
         const matches = [];
 
         models.Recipient.find( { boxNumber: boxNum }, function(err, recipient) {
@@ -33,7 +50,6 @@ module.exports = function (imagePath) {
             }
             for (let i = 0; i < recipient.length; i += 1) {
                 if (boxNum === recipient[i].boxNumber) {
-                    console.log("it worked!!!!!!!!!!!!!!!!!");
                     matches.push(recipient[i]);
                     console.log(matches);
                 }
