@@ -79,9 +79,10 @@ module.exports = function (imagePath) {
             console.log("Tracking number missing or unidentifiable");
             
         }
-        const matches = [];
+        let matches = [];
+        console.log(boxNum);
 
-        models.Recipient.find( { boxNumber: boxNum }, function(err, recipient) {
+        matches = await models.Recipient.find( { boxNumber: boxNum }, function(/*err,*/ recipient) {
             console.log("test");
             if (err) {
                 console.error('Unexpected error occured:');
@@ -98,6 +99,7 @@ module.exports = function (imagePath) {
                 }
             }
         });
+        console.log(matches);
 
         //split label at Ship To: or To: line
         // if (capsText.includes("SHIP TO/:/g") || capsText.includes("SHIP\nTO/:/g")) {
