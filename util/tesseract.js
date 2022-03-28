@@ -40,11 +40,8 @@ module.exports = function (imagePath) {
         }
         else {
             console.log("box number is missing on label");
-            boxNum = '0000';
         }
         boxNum = Number(boxNum);
-        console.log(boxNum);
-
         let trackingNum
         // USPS
         if (capsText.includes("USPS")){
@@ -54,7 +51,6 @@ module.exports = function (imagePath) {
         }
         // Amazon
         else if (RegExp(/TBA[0-9]{12}/).exec(capsText)!=null){
-           
             regex = RegExp(/TBA[0-9]{12}/);
             trackingNum = regex.exec(capsText);
             console.log("The Amazon tracking number is ".concat(trackingNum));
@@ -78,7 +74,6 @@ module.exports = function (imagePath) {
             console.log("Tracking number missing or unidentifiable");
             
         }
-        //let matches = [];
         console.log(boxNum);
         let trackNo = trackingNum[0];
 
