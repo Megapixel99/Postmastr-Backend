@@ -48,26 +48,26 @@ module.exports = function (imagePath) {
         let trackingNum
         // USPS
         if (capsText.includes("USPS")){
-            regex = RegExp(/((\d{4})(\s?\d{4}){4}\s?\d{2})|((\d{2})(\s?\d{3}){2}\s?\d{2})|((\D{2})(\s?\d{3}){3}\s?\D{2})\n/);
+            regex = RegExp(/((\d{4})(\s?\d{4}){4}\s?\d{2})|((\d{2})(\s?\d{3}){2}\s?\d{2})|((\D{2})(\s?\d{3}){3}\s?\D{2})/);
             trackingNum = regex.exec(capsText);
             console.log("The USPS tracking number is ".concat(trackingNum[0]));
         }
         // Amazon
-        else if (RegExp(/TBA[0-9]{12}\n/).exec(capsText)!=null){
+        else if (RegExp(/TBA[0-9]{12}/).exec(capsText)!=null){
            
             regex = RegExp(/TBA[0-9]{12}/);
             trackingNum = regex.exec(capsText);
             console.log("The Amazon tracking number is ".concat(trackingNum));
         }
         // UPS
-         else if(RegExp(/1Z.{16,21}\n/).exec(capsText)!=null)
+         else if(RegExp(/1Z.{16,21}/).exec(capsText)!=null)
          {
              regex = RegExp(/1Z.{16,21}/);
              trackingNum = regex.exec(capsText);
              console.log("UPS Tracking is ".concat(trackingNum));
          }
         //Fedex
-        else if(RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}\n/).exec(capsText)!=null)
+        else if(RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText)!=null)
         {
             regex =  (/[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}\n/);
             console.log(RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}\n/).exec(capsText));
@@ -82,8 +82,9 @@ module.exports = function (imagePath) {
         }
         //let matches = [];
         console.log(boxNum);
+        let trackNo = trackingNum[0];
 
-      let match =  connectDB()
+      let match =  await connectDB()
           .then(() => {
             return models.Recipient.find( { boxNumber: (Number(boxNum) === NaN ? null : boxNum) });
           }).then((recipient) => {
@@ -104,6 +105,10 @@ module.exports = function (imagePath) {
               console.error('Unexpected error occured:');
               console.error(err);
           })
+        const finalData ={
+            match,
+            trackNo
+        }
         //console.log(matches);
 
         //split label at Ship To: or To: line
@@ -127,7 +132,7 @@ module.exports = function (imagePath) {
         // console.log(text);
         // console.log(tracking);
         // console.log(toAddress);
-        return match;
+        return finalData;
         ;
     })();
 };

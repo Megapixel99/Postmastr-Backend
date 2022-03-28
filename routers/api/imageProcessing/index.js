@@ -38,9 +38,8 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
 
 
     return res.status(200).json({
-        result: {
-            match: labelData
-        },
+       
+         match: labelData,
         message: "Processing Complete",
     });
 });
