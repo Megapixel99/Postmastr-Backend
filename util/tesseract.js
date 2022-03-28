@@ -69,9 +69,7 @@ module.exports = function (imagePath) {
         //Fedex
         else if(RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText)!=null)
         {
-            regex =  (/[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}\n/);
-            console.log(RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}\n/).exec(capsText));
-            trackingNum = RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}\n/).exec(capsText);
+            trackingNum = RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText);
             console.log(trackingNum[0]);
             console.log("Fedex Tracking is ".concat(trackingNum[0]));
             
