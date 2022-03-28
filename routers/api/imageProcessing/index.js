@@ -34,11 +34,12 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
         img = `${img}-processed`;
     }
     const labelData = (await tesseract(img));
+    console.log(labelData)
 
 
     return res.status(200).json({
         result: {
-            finalData: labelData
+            match: labelData
         },
         message: "Processing Complete",
     });

@@ -1,4 +1,5 @@
 const { createWorker } = require('tesseract.js');
+const connectDB = require('./db.js');
 const path = require('path');
 const app = require('express').Router();
 const models = require('../models/models.js');
@@ -79,27 +80,31 @@ module.exports = function (imagePath) {
             console.log("Tracking number missing or unidentifiable");
             
         }
-        let matches = [];
+        //let matches = [];
         console.log(boxNum);
 
-        matches = await models.Recipient.find( { boxNumber: boxNum }, function(/*err,*/ recipient) {
-            console.log("test");
-            if (err) {
-                console.error('Unexpected error occured:');
-                console.error(err);
-                return;
-            } if (!recipient || recipient.length === 0) {
-                console.log('No box number was found');
-                return;
-            }
-            for (let i = 0; i < recipient.length; i += 1) {
-                if (boxNum === recipient[i].boxNumber) {
-                    matches.push(recipient[i]);
-                    console.log("matches: ".concat(matches));
-                }
-            }
-        });
-        console.log(matches);
+      let match =  connectDB()
+          .then(() => {
+            return models.Recipient.find( { boxNumber: (Number(boxNum) === NaN ? null : boxNum) });
+          }).then((recipient) => {
+              console.log("test");
+              console.log(typeof boxNum);
+              if (!recipient || recipient.length === 0) {
+                  console.log('No box number was found');
+                  return "no matches found, suggest manual input";
+              }
+              for (let i = 0; i < recipient.length; i += 1) {
+                  if (boxNum === recipient[i].boxNumber) {
+                      //matches.push(recipient[i]);
+                     /// console.log("matches: ".concat(matches));
+                     return recipient
+                  }
+              }
+          }).catch((err) => {
+              console.error('Unexpected error occured:');
+              console.error(err);
+          })
+        //console.log(matches);
 
         //split label at Ship To: or To: line
         // if (capsText.includes("SHIP TO/:/g") || capsText.includes("SHIP\nTO/:/g")) {
@@ -122,7 +127,7 @@ module.exports = function (imagePath) {
         // console.log(text);
         // console.log(tracking);
         // console.log(toAddress);
-        return text;
+        return match;
         ;
     })();
 };
