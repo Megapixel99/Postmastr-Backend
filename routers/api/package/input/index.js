@@ -28,11 +28,6 @@ app.post('*', (req, res) => {
                     recipientAddress: toAddress,
                     trackingNumber: trackingNo,
                     dateRecieved: new Date(),
-
-
-
-
-
                 })
                 newPackage.save().then(() => {
                     return res.status(201).json({
