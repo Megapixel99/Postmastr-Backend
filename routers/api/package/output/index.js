@@ -1,8 +1,15 @@
 const app = require('express').Router();
-const connectDB = require("../../../../util/db.js");
+const connectDB = require('../../../../util/db.js');
 const { Package } = require('../../../../models/models.js');
-/*function search(query) {
-  return models.Packages.find({ $or: [{ Key1: { $regex: `.*${query}.*` } }, { Key2: { $regex: `.*${query}.*` } }, { OtherKey: { $regex: `.*${query}.*` } }] }, null, { limit: 10 }).lean();
-}*/
+
+app.post('*', (req, res) => {
+  connectDB()
+  .then(() => Package.find( ...req.query ))
+  .then(packages => res.status(200).json(packages))
+  .catch(error =>
+    res.status(error.statusCode || 500)
+    .json({ error: error.message })
+  );
+});
 
 module.exports = app;
