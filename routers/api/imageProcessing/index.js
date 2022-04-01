@@ -4,41 +4,27 @@ const sharp = require('sharp');
 const path = require('path');
 const app = require('express').Router();
 const auth = require("../../../middleware/auth");
+const uuid = require('uuid').v4;
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        console.log("setting dest");
-        cb(null, path.resolve(`${__dirname}/../../../images`))
-    },
-});
-const upload = multer({ storage: storage });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fieldSize: 25 * 1024 * 1024 } });
 
 app.post('*',/* auth, */upload.single('image'), async (req, res) => {
-
-    //begin reg struct
-    console.log(req.file.path);
-    let img = req.file.path;
-    const metadata = await sharp(img).metadata();
-    console.log("Acquire Original Dimensions");
-    const origWidth = metadata.width;
-    const origHeight = metadata.height;
-    console.log("Original dimensions acquired");
-    if ((origWidth < 1000) && (origHeight < 1000)) {
-        console.log("begin resizing");
-        const resizedImage =
-            await sharp(img).resize(1000, 1000, {
-                fit: 'contain'
-            }).toFile(`${img}-processed`)
-        console.log("resizing successful");
-        console.log(resizedImage);
-        img = `${img}-processed`;
-    }
-    const labelData = (await tesseract(img));
-    console.log(labelData)
-    return res.status(200).json({
-       
-        labelData,
-        message: "Processing Complete",
-    });
+  let img = `${__dirname}/../../../images/${uuid()}-processed.png`;
+  let resJson = {
+    result: {
+      finalData: null
+    },
+    message: "Image Not Found",
+  }
+  if (req.file) {
+    (await sharp(req.file.buffer).resize(1000, 1000).toFile(img));
+  } else if (req.body.image) {
+    (await sharp(Buffer.from(req.body.image, 'base64')).resize(1000, 1000).toFile(img));
+  } else {
+    return res.status(400).json(resJson);
+  }
+  console.log("processing new image");
+  resJson.result.finalData = (await tesseract(img));
+  return res.status(200).json(resJson);
 });
 module.exports = app;
