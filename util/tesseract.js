@@ -20,7 +20,7 @@ module.exports = function (imagePath) {
         let regex;
         let boxNum = 0;
         // # 1234
-        if (RegExp(/#\s[0-9]{4}/).test(capsText)) {
+        if (RegExp(/#[^\S\r\n][0-9]{4}/).test(capsText)) {
             regex = RegExp(/#\s[0-9]{4}/);
             boxNum = regex.exec(capsText).toString().substring(2);
         }
