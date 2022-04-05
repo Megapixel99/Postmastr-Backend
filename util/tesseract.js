@@ -16,10 +16,11 @@ module.exports = function (imagePath) {
         const { data: { text } } = await worker.recognize(imagePath);
         await worker.terminate();
         capsText = text.toUpperCase(); //Convert text to uppercase for uniformity
+        console.log(capsText);
         let regex;
-        let boxNum;
+        let boxNum = 0;
         // # 1234
-        if (RegExp(/#\s[0-9]{4}/).test(capsText)) {
+        if (RegExp(/#[^\S\r\n][0-9]{4}/).test(capsText)) {
             regex = RegExp(/#\s[0-9]{4}/);
             boxNum = regex.exec(capsText).toString().substring(2);
         }
@@ -42,9 +43,10 @@ module.exports = function (imagePath) {
             console.log("box number is missing on label");
         }
         boxNum = Number(boxNum);
-        let trackingNum
+        let trackingNum;
         // USPS
         if (capsText.includes("USPS")) {
+            //tracking number evals to null after fix, need to figure out a new if condition.
             regex = RegExp(/((\d{4})(\s?\d{4}){4}\s?\d{2})|((\d{2})(\s?\d{3}){2}\s?\d{2})|((\D{2})(\s?\d{3}){3}\s?\D{2})/);
             trackingNum = regex.exec(capsText);
             console.log("The USPS tracking number is ".concat(trackingNum[0]));
