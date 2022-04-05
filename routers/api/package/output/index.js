@@ -2,9 +2,9 @@ const app = require('express').Router();
 const connectDB = require('../../../../util/db.js');
 const { Package } = require('../../../../models/models.js');
 
-app.post('*', (req, res) => {
+app.get('*', (req, res) => {
   connectDB()
-  .then(() => Package.find( ...req.query ))
+  .then(() => Package.find(req.query))
   .then(packages => res.status(200).json(packages))
   .catch(error =>
     res.status(error.statusCode || 500)
