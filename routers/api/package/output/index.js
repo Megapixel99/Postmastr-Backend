@@ -12,4 +12,14 @@ app.get('*', (req, res) => {
   );
 });
 
+app.get('*/:uuid', (req, res) => {
+  connectDB()
+  .then(() => Package.findOne({ uuid: req.params.uuid }))
+  .then(packages => res.status(200).json(packages))
+  .catch(error =>
+    res.status(error.statusCode || 500)
+    .json({ error: error.message })
+  );
+});
+
 module.exports = app;
