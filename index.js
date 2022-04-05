@@ -30,6 +30,7 @@ app.use('/imageProcessing', require('./routers/api/imageProcessing/index.js'));
 app.use('/user', require('./routers/api/user/index.js'));
 app.use('/recipient', require('./routers/api/recipient/index.js'));
 app.use('/package/input', require('./routers/api/package/input/index.js'));
+app.use('/package/suspicious', require('./routers/api/package/suspicious/input/index.js'));
 app.use('/package/output', require('./routers/api/package/output/index.js'));
 app.use('/assets/css', express.static('./assets/css'));
 app.use('/assets/fonts/nucleo', express.static('./assets/fonts/nucleo'));
