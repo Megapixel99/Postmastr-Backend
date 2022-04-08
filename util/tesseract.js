@@ -20,6 +20,7 @@ module.exports = function (imagePath) {
         let regex;
         let boxNum = 0;
         // # 1234
+        let carrier;
         if (RegExp(/#[^\S\r\n][0-9]{4}/).test(capsText)) {
             regex = RegExp(/#\s[0-9]{4}/);
             boxNum = regex.exec(capsText).toString().substring(2);
@@ -49,29 +50,34 @@ module.exports = function (imagePath) {
             //tracking number evals to null after fix, need to figure out a new if condition.
             regex = RegExp(/((\d{4})(\s?\d{4}){4}\s?\d{2})|((\d{2})(\s?\d{3}){2}\s?\d{2})|((\D{2})(\s?\d{3}){3}\s?\D{2})/);
             trackingNum = regex.exec(capsText);
+            carrier = "USPS";
             console.log("The USPS tracking number is ".concat(trackingNum[0]));
         }
         // Amazon
         else if (RegExp(/TBA[0-9]{12}/).exec(capsText) != null) {
             regex = RegExp(/TBA[0-9]{12}/);
             trackingNum = regex.exec(capsText);
+            carrier = "Amazon";
             console.log("The Amazon tracking number is ".concat(trackingNum));
         }
         // UPS
         else if (RegExp(/1Z.{16,21}/).exec(capsText) != null) {
             regex = RegExp(/1Z.{16,21}/);
             trackingNum = regex.exec(capsText);
+            carrier = "UPS";
             console.log("UPS Tracking is ".concat(trackingNum));
         }
         //Fedex
         else if (RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText) != null) {
             trackingNum = RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText);
             console.log(trackingNum[0]);
+            carrier = "FEDEX";
             console.log("Fedex Tracking is ".concat(trackingNum[0]));
 
         } else {
             trackingNum = '0000';
-            console.log("Tracking number missing or unidentifiable");
+            carrier = "Unknown"
+            console.log("Tracking number missing or unsupported");
 
         }
         console.log(boxNum);
@@ -100,31 +106,9 @@ module.exports = function (imagePath) {
             })
         const finalData = {
             matches,
+            carrier,
             trackNo
         }
-        //console.log(matches);
-
-        //split label at Ship To: or To: line
-        // if (capsText.includes("SHIP TO/:/g") || capsText.includes("SHIP\nTO/:/g")) {
-        //     sliceStart = capsText.indexOf("SHIP");
-        //     sliceEnd = sliceStart + 7;
-        // } else {
-        //     sliceStart = capsText.indexOf("TO: ");
-        //     sliceEnd = sliceStart + 3;
-        // }
-        // pt1 = capsText.substr(0, sliceStart).split("\n");
-        // pt2 = capsText.substr(sliceEnd, capsText.length - 1).split("\n");
-        // console.log(pt1);
-        // console.log(pt2);
-        // let toAddress = pt2.slice(0, 4).join();
-        // if (pt2[5].length < 15) {
-        //     tracking = pt2[6];
-        // } else {
-        //     tracking = pt2[5]
-        // }
-        // console.log(text);
-        // console.log(tracking);
-        // console.log(toAddress);
         return finalData;
         ;
     })();
