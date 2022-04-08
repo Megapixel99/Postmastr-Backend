@@ -6,6 +6,7 @@ const packageSchema = new mongoose.Schema({
 
   uuid: { type: String, required: false, default: uuid() },
   recipient: { type: String, required: true },
+  recipientMail: { type: String, required: true },
   carrierName: { type: String, required: true },
   trackingNumber: { type: Number, required: true },
   dateRecieved: { type: Date, required: true },

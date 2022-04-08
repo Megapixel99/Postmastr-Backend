@@ -6,6 +6,7 @@ const env = {
   databaseConnect: process.env.DATABASE_CONNECT,
   sessionSecret: process.env.SESSION_SECRET,
   jwtToken: process.env.JWT_SECRET,
+  appPass: process.env.APP_PASS,
   httpOnly: (process.env.HTTP_ONLY.toLowerCase() === 't' || process.env.HTTP_ONLY.toLowerCase() === 'true'),
 };
 
