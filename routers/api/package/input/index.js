@@ -1,7 +1,8 @@
 const app = require('express').Router();
 const connectDB = require('../../../../util/db.js');
 const { Package } = require('../../../../models/models.js');
-const {nodeMailer} = require('../../../../util');
+const { nodeMailer } = require('../../../../util');
+
 
 app.post('*', (req, res) => {
     connectDB()
@@ -16,30 +17,25 @@ app.post('*', (req, res) => {
 
             } else {
                 const recipient = req.body.recipient;
-
                 const carrier = req.body.carrierName;
-
                 const trackingNo = req.body.trackingNumber;
-                const email = "jjtang18@apu.edu";
+                const email = req.body.recipientMail;
                 const newPackage = new Package({
                     recipient: recipient,
+                    recipientMail: email,
                     carrierName: carrier,
                     trackingNumber: trackingNo,
                     dateRecieved: new Date(),
                 })
                 newPackage.save().then(() => {
                     nodeMailer(newPackage);
-                }).then(()=>{
+                }).then(() => {
                     return res.status(201).json({
-                      package: newPackage,
-                      message: "package logged"
+                        package: newPackage,
+                        message: "package logged"
                     });
                 })
-
-
             }
-
-
         })
         .catch(error => {
             return res.status(error.statusCode || 500).json({
