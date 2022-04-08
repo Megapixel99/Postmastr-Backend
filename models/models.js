@@ -6,10 +6,7 @@ const packageSchema = new mongoose.Schema({
 
   uuid: { type: String, required: false, default: uuid() },
   recipient: { type: String, required: true },
-  sender: { type: String, required: true },
   carrierName: { type: String, required: true },
-  returnAddress: { type: String, required: true },
-  recipientAddress: { type: String, required: true },
   trackingNumber: { type: Number, required: true },
   dateRecieved: { type: Date, required: true },
   datePickedUp: { type: Date, required: false, default: null },
