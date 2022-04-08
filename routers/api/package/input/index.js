@@ -30,10 +30,10 @@ app.post('*', (req, res) => {
                 newPackage.save().then(() => {
                    // Recipient.updateOne({email: newPackage.recipientMail},);find way to update packagesId array
                     nodeMailer(newPackage);
-                }).then(() => {
+                }).then(()=>{
                     return res.status(201).json({
-                        package: newPackage,
-                        message: "package logged"
+                      package: newPackage,
+                      message: "package logged"
                     });
                 })
             }
