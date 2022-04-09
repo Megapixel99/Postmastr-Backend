@@ -1,7 +1,6 @@
 const app = require('express').Router();
 const connectDB = require('../../../util/db.js');
 const { Recipient } = require('../../../models/models.js');
-
 app.post('*', (req, res) => {
     connectDB()
         .then(() => {
@@ -28,7 +27,6 @@ app.post('*', (req, res) => {
                             boxNumber: newRecipient.boxNumber,
                             email: newRecipient.email,
                             idNumber: newRecipient.idNumber,
-
                         }
                     })
                 }

@@ -30,7 +30,6 @@ async function main(newPackage) {
     text: `Hi ${newPackage.recipient|| "Student"} a package was received for you at our mailroom.\nPackage Info:\nCarrier: ${newPackage.carrierName||"Unknown Carrier"}\nDate Received: 
     ${newPackage.dateRecieved|| "Unknown"}\nTracking Number:${newPackage.trackingNumber||"Unknown"}\nplease allow 1-2 days for processing`, // plain text body'
   });
-  console.log(info.text);
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
