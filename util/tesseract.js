@@ -81,7 +81,7 @@ module.exports = function (imagePath) {
 
         }
         console.log(boxNum);
-        let trackNo = trackingNum[0];
+        let trackNo = trackingNum[0].replace(/\s/g, '');;
         let matches = [];
         let match = await connectDB()
             .then(() => {
