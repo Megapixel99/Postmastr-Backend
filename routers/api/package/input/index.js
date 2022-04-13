@@ -1,6 +1,6 @@
 const app = require('express').Router();
 const connectDB = require('../../../../util/db.js');
-const { Package } = require('../../../../models/models.js');
+const { Package, Recipient } = require('../../../../models/models.js');
 const { nodeMailer } = require('../../../../util');
 
 
@@ -28,6 +28,7 @@ app.post('*', (req, res) => {
                     dateRecieved: new Date(),
                 })
                 newPackage.save().then(() => {
+                   // Recipient.updateOne({email: newPackage.recipientMail},);find way to update packagesId array
                     nodeMailer(newPackage);
                 }).then(() => {
                     return res.status(201).json({
