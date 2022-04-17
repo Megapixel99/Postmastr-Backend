@@ -12,13 +12,11 @@ app.get('*/:uuid', (req, res) => {
   );
 });
 
-app.get('/:packageID', (req, res) => {
+app.get('*/:packageID', (req, res) => {
   connectDB()
-  .then(() => Package.findOneAndUpdate({id: req.params.packageID}
+  .then(() => Package.findOneAndUpdate({uuid: req.params.packageID}
   , {pickedUp: true}))
-  .then(function (package) {
-    res.send(package)
-  })
+  .then( package => res.send(package))
   .catch(error =>
     res.status(error.statusCode || 500)
     .json({ error: error.message })
