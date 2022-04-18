@@ -23,6 +23,16 @@ app.put('*/checkout/:uuid', (req, res) => {
   );
 });
 
+app.put('*/lost/:uuid', (req, res) => {
+  connectDB()
+  .then(() =>
+   Package.findOneAndUpdate({uuid:req.params.uuid},{$set:{lost:true}},{returnNewDocument:true}))
+  .then( package => res.send(package))
+  .catch(error =>
+    res.status(error.statusCode || 500)
+    .json({ error: error.message })
+  );
+});
 app.get('*', (req, res) => {
   connectDB()
   .then(() => Package.find(req.query))
