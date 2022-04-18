@@ -22,7 +22,7 @@ const recipientSchema = new mongoose.Schema({
     boxNumber: { type: Number, required: true },
     email: { type: String, required: true },
     idNumber: { type: String, required: true },
-    packagesIds: [{ type: String, required: true }],
+    packagesIds: [String],
     employeeNote: { type: String, required: false, default: "" },
 });
 

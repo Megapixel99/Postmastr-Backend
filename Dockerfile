@@ -4,9 +4,9 @@ RUN apt-get update
 
 WORKDIR /home/node/app
 
-RUN mkdir ./uploads
+RUN mkdir ./images
 
-RUN chmod 777 ./uploads
+RUN chmod 777 ./images
 
 COPY package*.json ./
 
