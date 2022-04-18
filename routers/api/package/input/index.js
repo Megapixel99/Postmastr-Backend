@@ -27,8 +27,9 @@ app.post('*', (req, res) => {
                     trackingNumber: trackingNo,
                     dateRecieved: new Date(),
                 })
+                id = newPackage.uuid;
                 newPackage.save().then(() => {
-                   // Recipient.updateOne({email: newPackage.recipientMail},);find way to update packagesId array
+                   //Recipient.findOneAndUpdate({email:email},{$push:{packagesIds: {id}}},{returnNewDocument:true});
                     nodeMailer(newPackage);
                 }).then(() => {
                     return res.status(201).json({
