@@ -12,9 +12,10 @@ app.get('*/:uuid', (req, res) => {
   );
 });
 
-app.put('*/:packageID', (req, res) => {
+app.put('*/checkout/:uuid', (req, res) => {
   connectDB()
-  .then(() => Package.findOneAndUpdate({uuid:"46554513-82dc-4240-8e2b-869526ad246c"},{$set:{pickedUp:true}}))
+  .then(() =>
+   Package.findOneAndUpdate({uuid:req.params.uuid},{$set:{pickedUp:true, datePickedUp: Date.now()}},{returnNewDocument:true}))
   .then( package => res.send(package))
   .catch(error =>
     res.status(error.statusCode || 500)
