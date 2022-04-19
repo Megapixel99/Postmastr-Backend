@@ -1,8 +1,8 @@
 const app = require('express').Router();
 const connectDB = require('../../../../util/db.js');
-const { Package } = require('../../../../models/models.js');
+const { SusForm } = require('../../../../models/models.js');
 
-app.post('*', (req, res) => {
+app.post('/', (req, res) => {
   connectDB()
   .then(() =>
     new SusForm(req.body).save()
@@ -14,7 +14,7 @@ app.post('*', (req, res) => {
   );
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   connectDB()
   .then(() => SusForm.find(req.query))
   .then(susForms => res.status(200).json(susForms))
@@ -24,7 +24,7 @@ app.get('*', (req, res) => {
   );
 });
 
-app.get('*/:uuid', (req, res) => {
+app.get('/:uuid', (req, res) => {
   connectDB()
   .then(() => SusForm.findOne({ uuid: req.params.uuid }))
   .then(susForms => res.status(200).json(susForms))
