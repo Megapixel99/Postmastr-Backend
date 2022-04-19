@@ -24,15 +24,14 @@ async function main(newPackage) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"APU Mail Services 👻" <postmastr1@gmail.com>', // sender address
+    from: '"APU Mail Services" <postmastr1@gmail.com>', // sender address
     to: newPackage.recipientMail, // list of receivers
     subject: "You've got mail✔", // Subject line
-    text: `Hi ${newPackage.recipient|| "Student"} a package was received for you at our mailroom.\nPackage Info:\nCarrier: ${newPackage.carrierName||"Unknown Carrier"}\nDate Received: 
+    text: `Dear Student,\n a package was received for you at our mailroom.\nPackage Info:\nRecipient Name: ${newPackage.recipient}\nCarrier: ${newPackage.carrierName||"Unknown Carrier"}\nDate Received: 
     ${newPackage.dateRecieved|| "Unknown"}\nTracking Number:${newPackage.trackingNumber||"Unknown"}\nplease allow 1-2 days for processing`, // plain text body'
   });
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
