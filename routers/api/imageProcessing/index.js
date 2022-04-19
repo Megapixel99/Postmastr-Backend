@@ -19,28 +19,25 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
     },
    
   }
-  
-  if (req.file) {
-    console.log("use req.file");
-    const imgBuffer = Buffer.from(req.file.buffer, `base64`);
+  /*
+  var inputFile;
+  const imgBuffer = Buffer.from(req.body.image, `base64`);
   let imgSize = (await sharp(imgBuffer).metadata).size;
   if (imgSize <= 250000) {
     inputFile = (await sharp(imgBuffer).resize(1000, 1000, { fit: 'contain' }).toFile(img));
   } else {
     inputFile = (await sharp(imgBuffer).toFile(img));
   }
-    
+  */
+  if (req.file) {
+    console.log("use req.file");
+    resizedImage =(await sharp(req.file.buffer).resize(1000, 1000,{fit:'contain'}).toFile(img));
     resJson.result.message = "image found";
   } else if (req.body.image) {
     console.log("use req.body");
-    const imgBuffer = Buffer.from(req.body.image, `base64`);
-  let imgSize = (await sharp(imgBuffer).metadata).size;
-  if (imgSize <= 250000) {
-    inputFile = (await sharp(imgBuffer).resize(1000, 1000, { fit: 'contain' }).toFile(img));
-  } else {
-    inputFile = (await sharp(imgBuffer).toFile(img));
-  }
 
+    resizedImage=(await sharp(Buffer.from(req.body.image, 'base64')).toFile(img));
+    resJson.result.message = "image found";
   } else {
     return res.status(400).json(resJson);
   }
