@@ -124,11 +124,14 @@ router.get('/susPackageReport', (req, res) => {
 });
 
 function combineData (data) {
-  let str = `${Object.keys(data[0]).join(',')}\n`;
-  for(let i = 0; i < data.length; i++) {
-    str += `${Object.values(data[i]).join(',')}\n`;
+  if (data.length > 0) {
+    let str = `${Object.keys(data[0]).join(',')}\n`;
+    for(let i = 0; i < data.length; i++) {
+      str += `${Object.values(data[i]).join(',')}\n`;
+    }
+    return str;
   }
-  return str;
+  return '';
 }
 router.get('/usageStatistics', (req, res) => {
   Promise.all([Recipient.find(null, {_v: 0, id: 0}).lean()
