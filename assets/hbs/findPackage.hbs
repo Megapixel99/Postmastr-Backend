@@ -46,18 +46,16 @@
                   <td scope="row">{{this.recipient}}</td>
                   <td>{{this.sender}}</td>
                   <td>{{this.carrierName}}</td>
-                  <td>{{this.returnAddress}}</td>
-                  <td>{{this.recipientAddress}}</td>
                   <td>{{this.trackingNumber}}</td>
+                  <td>{{this.returnAddress}}</td>
                 </tr>
                 {{else}}
                 <tr id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/package/{{this.uuid}}'">
                   <td scope="row">{{this.recipient}}</td>
                   <td>{{this.sender}}</td>
                   <td>{{this.carrierName}}</td>
-                  <td>{{this.returnAddress}}</td>
-                  <td>{{this.recipientAddress}}</td>
                   <td>{{this.trackingNumber}}</td>
+                  <td>{{this.returnAddress}}</td>
                 </tr>
                 {{/ifOverFive}}
                 {{/each}}
