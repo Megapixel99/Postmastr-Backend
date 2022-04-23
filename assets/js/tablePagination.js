@@ -1,7 +1,7 @@
 function hideRows(tr, filter = "", min = 0, max = 5) {
   let rows = [];
   for (let i = 1; i < tr.length; i++) {
-    tr[i].style.display = "none";
+    tr[i].style = "cursor: pointer; text-align: center; display: none;";
     let tds = tr[i].getElementsByTagName("td");
     if (tds) {
       for (let j = 0; j < tds.length; j++) {
@@ -56,7 +56,7 @@ function changeTablePage(elem) {
   let node = document.getElementsByClassName('page-item active')[0].querySelector('.page-link');
   if (pageItems[1].querySelector('.page-link').isEqualNode(node) && pageItems[0].querySelector('.page-link').isEqualNode(elem)) {
     return;
-  }else if (pageItems[pageItems.length - 2].querySelector('.page-link').isEqualNode(node) && pageItems[pageItems.length - 1].querySelector('.page-link').isEqualNode(elem)) {
+  } else if (pageItems[pageItems.length - 2].querySelector('.page-link').isEqualNode(node) && pageItems[pageItems.length - 1].querySelector('.page-link').isEqualNode(elem)) {
     return;
   }
   if (Number(elem.innerHTML)) {
