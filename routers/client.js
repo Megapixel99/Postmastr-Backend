@@ -5,6 +5,7 @@ const path = require('path');
 const { db } = require('../util');
 const { Package, Recipient, SusForm } = require('../models/models.js');
 const _ = require('lodash');
+const moment = require('moment');
 
 let months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
@@ -17,7 +18,7 @@ function prepareSource(filePath, data, templateName = 'main') {
     }
   });
   handlebars.registerHelper('ifModFive', function (index, options) {
-    if ((index + 1) % 5 === 0) {
+    if (index > 4 && (index + 1) % 5 === 0) {
       return options.fn(this);
     } else {
       return options.inverse(this);
@@ -29,6 +30,14 @@ function prepareSource(filePath, data, templateName = 'main') {
     } else {
       return options.inverse(this);
     }
+  });
+  handlebars.registerHelper('formatShortDate', (dateString) => {
+    if (dateString) {
+      return new handlebars.SafeString(
+        moment(dateString).format('MM/DD/YYYY'),
+      );
+    }
+    return handlebars.SafeString();
   });
   handlebars.registerHelper('fixCamelCase', function (_str, options) {
     let str = _str.replace(/(.)([A-Z])/gm, '$1 $2');
@@ -161,7 +170,7 @@ router.get('/find/recipient', (req, res) => {
     return res.send(prepareSource(`${__dirname}/../assets/hbs/findRecipient.hbs`, {
       username: req.session.username,
       recipients: recipients.length !== 0 ? {
-        headers: Object.keys(recipients[0]).filter((e) => e !== "packages"),
+        headers: Object.keys(recipients[0]).filter((e) => !['packagesIds', 'employeeNote'].includes(e)),
         rows: recipients,
       } : [],
       path: req.path,

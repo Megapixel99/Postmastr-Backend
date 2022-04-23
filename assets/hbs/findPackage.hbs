@@ -44,18 +44,18 @@
                 {{#ifOverFive @index}}
                 <tr style="display: none" id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/package/{{this.uuid}}'">
                   <td scope="row">{{this.recipient}}</td>
-                  <td>{{this.sender}}</td>
+                  <td>{{this.recipientMail}}</td>
                   <td>{{this.carrierName}}</td>
                   <td>{{this.trackingNumber}}</td>
-                  <td>{{this.returnAddress}}</td>
+                  <td>{{formatShortDate this.datePickedUp}}</td>
                 </tr>
                 {{else}}
                 <tr id="table-row-{{@index}}" style="cursor: pointer; text-align: center;" onclick="window.location = '/find/package/{{this.uuid}}'">
                   <td scope="row">{{this.recipient}}</td>
-                  <td>{{this.sender}}</td>
+                  <td>{{this.recipientMail}}</td>
                   <td>{{this.carrierName}}</td>
                   <td>{{this.trackingNumber}}</td>
-                  <td>{{this.returnAddress}}</td>
+                  <td>{{formatShortDate this.datePickedUp}}</td>
                 </tr>
                 {{/ifOverFive}}
                 {{/each}}
@@ -96,4 +96,7 @@
     </div>
   </div>
   <script type="text/javascript" src="/assets/js/tablePagination.js"></script>
+  <script type="text/javascript">
+    tableLookup(document.getElementById('search'))
+  </script>
 {{/layouts/main}}
