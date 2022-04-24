@@ -1,6 +1,6 @@
 # Postmastr
 
-###### (No, Postmastr does not have a not a typo :wink:)
+###### (No, Postmastr does not have a typo :wink:)
 
 The purpose of this application is to track the arrival of packages in the mail and hopes to help streamline the process using Optical Character Recognition technology via [TesseractJS](https://tesseract.projectnaptha.com/).
 
