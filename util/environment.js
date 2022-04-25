@@ -8,6 +8,8 @@ const env = {
   jwtToken: process.env.JWT_SECRET,
   appPass: process.env.APP_PASS,
   httpOnly: (process.env.HTTP_ONLY.toLowerCase() === 't' || process.env.HTTP_ONLY.toLowerCase() === 'true'),
+  compressionUsername: process.env.COMPRESSION_USERNAME,
+  ocrApiKey: process.env.OCR_API_KEY,
 };
 
 for (const key in env) {
