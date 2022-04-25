@@ -1,5 +1,5 @@
 const multer = require('multer');
-const { tesseract, labelExtractor } = require('../../../util');
+const { tesseract, labelExtractor, environment: env } = require('../../../util');
 const sharp = require('sharp');
 const path = require('path');
 const app = require('express').Router();
@@ -50,11 +50,12 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
      formData.append('iscreatesearchablepdf', 'true');
      formData.append('issearchablepdfhidetextlayer', 'false');
      let buffer;
-     if (file.size/1000000 > 1) {
+     if (file.size/1000000 > 1) { //convert file size to megabytes for comparison
        let size = 500;
        do {
          buffer = (await request.post(`https://im2.io/${(env.compressionUsername).toString()}/${size}x${size},fit`).attach('file', path.resolve(img))).body;
          file = (await sharp(buffer).toFile(img));
+         size = Math.floor(size/2);
        } while (file.size/1000000 > 1);
      } else {
        buffer = (await sharp(img).toBuffer());
