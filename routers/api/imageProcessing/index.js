@@ -69,9 +69,13 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
        }
      }));
      if (response.data.ParsedResults && response.data.ParsedResults[0] && response.data.ParsedResults[0].ParsedText) {
-       return res.status(200).json((await labelExtractor(response.data.ParsedResults[0].ParsedText)));
+       let labelData = (await labelExtractor(response.data.ParsedResults[0].ParsedText));
+       if (response.data.SearchablePDFURL) {
+         labelData.pdfUrl = response.data.SearchablePDFURL
+       }
+       return res.status(200).json(labelData);
      } else {
-       return res.status(200).json({});
+       return res.status(200).json(await labelExtractor(''));
      }
    } else {
      if (file.width < 1000 || file.height < 1000) {
