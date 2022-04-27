@@ -29,10 +29,10 @@ const recipientSchema = new mongoose.Schema({
 const formSchema = new mongoose.Schema({
     uuid: { type: String, required: false, default: uuid() },
     employeeName: { type: String, required: true },
-    timeStamp: { type: Date, required: true },
+    timeStamp: { type: Date, required: false, },
     susTracking: { type: String, required: true },
     reportReason: { type: String, required: true },
-    employeeNote: { type: String, required: false, default: "" },
+    employeeNote: { type: String, required: false, default: Date.now()},
     isResolved: { type: Boolean, default: false },
     packageUUID: { type: String, required: true },
 });
