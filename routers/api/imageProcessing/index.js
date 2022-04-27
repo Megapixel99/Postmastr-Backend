@@ -17,8 +17,9 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
   console.log(req.file);
   let resJson = {
     result: {
+      uuid: uuid(),
       finalData: null,
-      message: "Image Not Found",
+      message: "Image Not Found"
     },
   }
   /*
