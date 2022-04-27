@@ -73,7 +73,8 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
        if (response.data.SearchablePDFURL) {
          labelData.pdfUrl = response.data.SearchablePDFURL
        }
-       return res.status(200).json(labelData);
+       resJson.result.finalData = labelData
+       return res.status(200).json(resJson);
      } else {
        return res.status(200).json(await labelExtractor(''));
      }
