@@ -50,6 +50,7 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
      formData.append('isOverlayRequired', 'false');
      formData.append('iscreatesearchablepdf', 'true');
      formData.append('issearchablepdfhidetextlayer', 'false');
+     formData.append('OCREngine', '2');
      let buffer;
      if (file.size/1000000 > 1) { //convert file size to megabytes for comparison
        let size = 500;
