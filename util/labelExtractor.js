@@ -62,13 +62,13 @@ module.exports = async function (capsText) {
       console.log("Fedex Tracking is ".concat(trackingNum[0]));
 
   } else {
-      trackingNum = '';
+      trackingNum = [''];
       carrier = "Unknown"
       console.log("Tracking number missing or unsupported");
 
   }
   console.log(boxNum);
-  let trackNo = trackingNum[0].replace(/\s/g, '');;
+  let trackNo = trackingNum[0].replace(/\s/g, '');
   let matches = [];
   let match = await connectDB()
       .then(() => {
