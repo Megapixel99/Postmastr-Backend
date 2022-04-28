@@ -3,6 +3,16 @@ const path = require('path');
 const app = require('express').Router();
 const models = require('../models/models.js');
 
+function checkValidTrackingNum(trackingNum) {
+  if (trackingNum[0]) {
+    return trackingNum[0];
+  } else if (trackingNum) {
+    return trackingNum;
+  } else {
+    return '';
+  }
+}
+
 module.exports = async function (capsText) {
   let regex;
   let boxNum = 0;
@@ -36,30 +46,31 @@ module.exports = async function (capsText) {
   if (capsText.includes("USPS")) {
       //tracking number evals to null after fix, need to figure out a new if condition.
       regex = RegExp(/((\d{4})(\s?\d{4}){4}\s?\d{2})|((\d{2})(\s?\d{3}){2}\s?\d{2})|((\D{2})(\s?\d{3}){3}\s?\D{2})/);
-      trackingNum = regex.exec(capsText);
+      trackingNum = checkValidTrackingNum(regex.exec(capsText));
       carrier = "USPS";
-      console.log("The USPS tracking number is ".concat(trackingNum[0]));
+      console.log("The USPS tracking number is ".concat(trackingNum));
   }
   // Amazon
   else if (RegExp(/TBA[0-9]{12}/).exec(capsText) != null) {
       regex = RegExp(/TBA[0-9]{12}/);
-      trackingNum = regex.exec(capsText);
+      trackingNum = checkValidTrackingNum(regex.exec(capsText));
       carrier = "Amazon";
       console.log("The Amazon tracking number is ".concat(trackingNum));
   }
   // UPS
   else if (RegExp(/1Z.{16,21}/).exec(capsText) != null) {
       regex = RegExp(/1Z.{16,21}/);
-      trackingNum = regex.exec(capsText);
+      trackingNum = checkValidTrackingNum(regex.exec(capsText));
       carrier = "UPS";
       console.log("UPS Tracking is ".concat(trackingNum));
   }
   //Fedex
   else if (RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText) != null) {
-      trackingNum = RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/).exec(capsText);
-      console.log(trackingNum[0]);
+      regex = RegExp(/[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{3}/);
+      trackingNum = checkValidTrackingNum(regex.exec(capsText));
+      console.log(trackingNum);
       carrier = "FEDEX";
-      console.log("Fedex Tracking is ".concat(trackingNum[0]));
+      console.log("Fedex Tracking is ".concat(trackingNum));
 
   } else {
       trackingNum = [''];
@@ -68,7 +79,7 @@ module.exports = async function (capsText) {
 
   }
   console.log(boxNum);
-  let trackNo = trackingNum[0].replace(/\s/g, '');
+  let trackNo = trackingNum.replace(/\s/g, '');
   let matches = [];
   let match = await connectDB()
       .then(() => {
