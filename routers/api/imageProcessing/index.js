@@ -70,7 +70,7 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
          "Content-Length": formData.getLengthSync()
        }
      }));
-     console.log(response);
+     console.log(response.data);
      if (response.data.ParsedResults && response.data.ParsedResults[0] && response.data.ParsedResults[0].ParsedText) {
        let labelData = (await labelExtractor(response.data.ParsedResults[0].ParsedText));
        if (response.data.SearchablePDFURL) {
