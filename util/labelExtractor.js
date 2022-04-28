@@ -62,7 +62,7 @@ module.exports = async function (capsText) {
       console.log("Fedex Tracking is ".concat(trackingNum[0]));
 
   } else {
-      trackingNum = '0000';
+      trackingNum = '';
       carrier = "Unknown"
       console.log("Tracking number missing or unsupported");
 

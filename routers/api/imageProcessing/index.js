@@ -77,7 +77,8 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
        resJson.result.finalData = labelData
        return res.status(200).json(resJson);
      } else {
-       return res.status(200).json(await labelExtractor(''));
+       resJson.result.finalData = (await labelExtractor(''));
+       return res.status(200).json(resJson);
      }
    } else {
      if (file.width < 1000 || file.height < 1000) {
