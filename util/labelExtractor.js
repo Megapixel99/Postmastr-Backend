@@ -58,8 +58,8 @@ module.exports = async function (capsText) {
       console.log("The Amazon tracking number is ".concat(trackingNum));
   }
   // UPS
-  else if (RegExp(/1Z.{16,21}/).exec(capsText) != null) {
-      regex = RegExp(/1Z.{16,21}/);
+  else if (RegExp(/(1Z|12).{16,21}/).exec(capsText) != null) {
+      regex = RegExp(/(1Z|12).{16,21}/);
       trackingNum = checkValidTrackingNum(regex.exec(capsText));
       carrier = "UPS";
       console.log("UPS Tracking is ".concat(trackingNum));
