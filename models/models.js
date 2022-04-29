@@ -8,7 +8,7 @@ const packageSchema = new mongoose.Schema({
   recipient: { type: String, required: true },
   recipientMail: { type: String, required: true },
   carrierName: { type: String, required: true },
-  trackingNumber: { type: Number, required: true },
+  trackingNumber: { type: String, required: true },
   dateRecieved: { type: Date, required: true },
   datePickedUp: { type: Date, required: false, default: null },
   lost: { type: Boolean, required: false, default: false },
