@@ -83,6 +83,7 @@ module.exports = async function (capsText) {
   if (trackingNum) {
     trackNo = trackingNum.replace(/\s/g, '')
   }
+  console.log(trackNo);
   let matches = [];
   let match = await connectDB()
       .then(() => {
