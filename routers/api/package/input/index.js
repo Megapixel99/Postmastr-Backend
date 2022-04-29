@@ -11,10 +11,15 @@ app.post('*', (req, res) => {
         }).then(package => {
             if (package) {
                 console.log("duplicate");
-                return res.status(403).json({
-                    message: "package already in system",
+                Promise.all([
+                    nodeMailer(req.body),
+                    Recipient.Package({trackingNumber: req.body.trackingNumber},{$inc:{emailsSent: 1}),
+                ]).then(function () {
+                    return res.status(201).json({
+                        package: package,
+                        message: "package logged"
+                    });
                 });
-
             } else {
                 const recipient = req.body.recipient;
                 const carrier = req.body.carrierName;
@@ -26,6 +31,7 @@ app.post('*', (req, res) => {
                     carrierName: carrier,
                     trackingNumber: trackingNo,
                     dateRecieved: new Date(),
+                    emailsSent: 1,
                 })
                 id = newPackage.uuid;
                 newPackage.save().then(() => {
