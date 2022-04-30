@@ -17,7 +17,6 @@ app.post('*', (req, res) => {
             } else {
                 const newRecipient = new Recipient({
                   ...req.body,
-                  packagesIds: [],
                 });
                 newRecipient.save().then(() => {
                     return res.status(201).json({
