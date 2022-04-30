@@ -21,10 +21,7 @@ app.post('*', (req, res) => {
                 newRecipient.save().then(() => {
                     return res.status(201).json({
                         result: {
-                            name: newRecipient.name,
-                            boxNumber: newRecipient.boxNumber,
-                            email: newRecipient.email,
-                            idNumber: newRecipient.idNumber,
+                            newRecipient,
                         }
                     })
                 }
