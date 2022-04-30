@@ -22,16 +22,7 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
       message: "Image Not Found"
     },
   }
-  /*
-  var inputFile;
-  const imgBuffer = Buffer.from(req.body.image, `base64`);
-  let imgSize = (await sharp(imgBuffer).metadata).size;
-  if (imgSize <= 250000) {
-    inputFile = (await sharp(imgBuffer).resize(1000, 1000, { fit: 'contain' }).toFile(img));
-  } else {
-    inputFile = (await sharp(imgBuffer).toFile(img));
-  }
-  */
+ 
   let file;
   if (req.file) {
     console.log("use req.file");
