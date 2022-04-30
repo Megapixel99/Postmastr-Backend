@@ -13,7 +13,7 @@ app.post('*', (req, res) => {
                 console.log("duplicate");
                 Promise.all([
                     nodeMailer(req.body),
-                    Recipient.Package({trackingNumber: req.body.trackingNumber},{$inc:{emailsSent: 1}),
+                    Recipient.Package({trackingNumber: req.body.trackingNumber},{$inc:{emailsSent: 1}}),
                 ]).then(function () {
                     return res.status(201).json({
                         package: package,
@@ -26,6 +26,7 @@ app.post('*', (req, res) => {
                 const trackingNo = req.body.trackingNumber;
                 const email = req.body.recipientMail;
                 const newPackage = new Package({
+                    uuid: req.body.uuid,
                     recipient: recipient,
                     recipientMail: email,
                     carrierName: carrier,
@@ -35,7 +36,6 @@ app.post('*', (req, res) => {
                 })
                 id = newPackage.uuid;
                 newPackage.save().then(() => {
-                   //Recipient.findOneAndUpdate({email:email},{$push:{packagesIds: {id}}},{returnNewDocument:true});
                     nodeMailer(newPackage);
                 }).then(() => {
                     return res.status(201).json({
