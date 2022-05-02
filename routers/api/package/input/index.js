@@ -13,11 +13,16 @@ app.post('*', (req, res) => {
                 console.log("duplicate");
                 Promise.all([
                     nodeMailer(req.body),
-                    Recipient.Package({trackingNumber: req.body.trackingNumber},{$inc:{emailsSent: 1}}),
+                    Recipient.findOneAndUpdate({trackingNumber: req.body.trackingNumber},{$inc:{emailsSent: 1}}),
                 ]).then(function () {
                     return res.status(201).json({
                         package: package,
                         message: "package logged"
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    return res.status(error.statusCode || 500).json({
+                        error: error.message,
                     });
                 });
             } else {
@@ -46,6 +51,7 @@ app.post('*', (req, res) => {
             }
         })
         .catch(error => {
+          console.log(error);
             return res.status(error.statusCode || 500).json({
                 error: error.message,
             });
