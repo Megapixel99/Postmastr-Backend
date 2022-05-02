@@ -39,6 +39,3 @@ async function main(newPackage) {
   return;
 
 }
-
-
-
