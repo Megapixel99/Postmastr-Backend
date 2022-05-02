@@ -19,6 +19,11 @@ app.post('*', (req, res) => {
                         package: package,
                         message: "package logged"
                     });
+                }).catch(error => {
+                    console.log(error);
+                    return res.status(error.statusCode || 500).json({
+                        error: error.message,
+                    });
                 });
             } else {
                 const recipient = req.body.recipient;
@@ -46,6 +51,7 @@ app.post('*', (req, res) => {
             }
         })
         .catch(error => {
+          console.log(error);
             return res.status(error.statusCode || 500).json({
                 error: error.message,
             });
