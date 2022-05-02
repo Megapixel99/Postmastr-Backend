@@ -28,7 +28,7 @@ async function main(newPackage) {
     from: '"APU Mail Services" <postmastr1@gmail.com>', // sender address
     to: newPackage.recipientMail, // list of receivers
     subject: "You've got mail✔", // Subject line
-    text: `Dear Student,\n a package was received for you at our mailroom.\nPackage Info:\nRecipient Name: ${newPackage.recipient}\nCarrier: ${newPackage.carrierName||"Unknown Carrier"}\nDate Received:
+    text: `Dear Student,\n A package was received for you at our mailroom.\nPackage Info:\nRecipient Name: ${newPackage.recipient}\nCarrier: ${newPackage.carrierName||"Unknown Carrier"}\nDate Received:
     ${newPackage.dateRecieved ? moment(newPackage.dateRecieved, 'YYYY-MM-DD').format("dddd MMMM Do, YYYY") : "Unknown"}\nTracking Number:${newPackage.trackingNumber||"Unknown"}\nplease allow 1-2 days for processing`, // plain text body'
   });
   console.log("Message sent: %s", info.messageId);
