@@ -36,7 +36,7 @@ app.post('*', (req, res) => {
                     recipientMail: email,
                     carrierName: carrier,
                     trackingNumber: trackingNo,
-                    dateRecieved: Date.now(),
+                    dateRecieved: req.body.dateRecieved,
                     emailsSent: 1,
                 })
                 id = newPackage.uuid;

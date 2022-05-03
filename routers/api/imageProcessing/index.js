@@ -22,7 +22,7 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
       message: "Image Not Found"
     },
   }
- 
+
   let file;
   if (req.file) {
     console.log("use req.file");
@@ -61,7 +61,7 @@ app.post('*',/* auth, */upload.single('image'), async (req, res) => {
          "Content-Length": formData.getLengthSync()
        }
      }));
-     console.log(response.data);
+     console.log(response.data.ParsedResults[0].TextOverlay);
      if (response.data.ParsedResults && response.data.ParsedResults[0] && response.data.ParsedResults[0].ParsedText) {
        let labelData = (await labelExtractor(response.data.ParsedResults[0].ParsedText));
        if (response.data.SearchablePDFURL) {
