@@ -4,7 +4,7 @@ const app = require('express').Router();
 const models = require('../models/models.js');
 
 function checkValidTrackingNum(trackingNum) {
-  if (trackingNum[0]) {
+  if (trackingNum && trackingNum[0]) {
     return trackingNum[0];
   } else if (trackingNum) {
     return trackingNum;
