@@ -55,4 +55,4 @@ project directory to run the server, which will run the application:
 $ docker run --restart=on-failure --env-file path/to/file -d -p 3000:3000 -t postmastr
 ```
 
-Licensed under the MIT license.
+[Licensed under the MIT license.](https://github.com/Megapixel99/Postmastr-Backend/blob/master/LICENSE)
