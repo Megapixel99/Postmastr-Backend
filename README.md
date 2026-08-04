@@ -6,6 +6,27 @@
 
 The purpose of this application is to track the arrival of packages in the mail and hopes to help streamline the process using Optical Character Recognition technology via [TesseractJS](https://tesseract.projectnaptha.com/). The mobile application for this repository can be found [here](https://github.com/kattmeller/Postmastr).
 
+## Overview
+
+A staff member captures a shipping label; the backend uses **OCR** (Tesseract.js) to read the recipient and package details, records the package, and emails the recipient that it has arrived. This repository is the **backend / API**; the companion mobile app lives [here](https://github.com/kattmeller/Postmastr).
+
+## Features
+
+- OCR label reading (Tesseract.js) with image pre-processing (`sharp` / `imagemin`)
+- Package intake, categorization, and lookup
+- Email notifications to recipients (`nodemailer`)
+- JWT + session authentication
+- REST API plus a Handlebars web interface
+- Dockerized deployment
+
+## Tech stack
+
+Node.js · Express · MongoDB (Mongoose) · Handlebars · Tesseract.js · Nodemailer · Docker
+
+## Context
+
+Built as a senior capstone project, split across backend, web, and mobile components.
+
 ### Prepare the environment
 
  - Create a new [gmail](https://www.google.com/gmail/about/) account (or use an existing one)
